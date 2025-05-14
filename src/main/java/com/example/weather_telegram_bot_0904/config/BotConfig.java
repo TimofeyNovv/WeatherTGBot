@@ -1,0 +1,67 @@
+package com.example.weather_telegram_bot_0904.config;
+
+import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.*;
+import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
+import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.handlers.*;
+import com.example.weather_telegram_bot_0904.model.state.UserState;
+import com.example.weather_telegram_bot_0904.controller.commandHandlers.*;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+import java.util.List;
+
+@Configuration
+@Data
+@PropertySource("application.properties")
+public class BotConfig {
+
+    @Value("${bot.name}")
+    String botName;
+
+    @Value("${bot.token}")
+    String token;
+
+    @Bean
+    public CommandProcessor commandProcessor(
+            StartCommandHandler startHandler,
+            DefaultCommandHandler defaultHandler,
+            LatitudeCommandHandler latitudeCommandHandler,
+            LongitudeCommandHandler longitudeCommandHandler,
+            TextInputHandler textInputHandler,
+            SettingsHandler settingsHandler
+    ) {
+        return new CommandProcessor(List.of(
+                startHandler,
+                latitudeCommandHandler,
+                longitudeCommandHandler,
+                textInputHandler,
+                settingsHandler,
+                defaultHandler
+        ));
+    }
+
+
+    @Bean
+    CallbackProcessor callbackProcessor(
+        WeatherCBDHandler weatherCBDHandler,
+        TemperatureCBDHandler temperatureCBDHandler,
+        HumidityCBDHandler humidityCBDHandler,
+        ApparentTemperatureCBDHandler apparentTemperatureCBDHandler,
+        WindSpeedCBDHandler windSpeedCBDHandler,
+        PrecipTypeCBDHandler precipTypeCBDHandler,
+        DefaultCBDHandler defaultCBDHandler
+    ) {
+        return new CallbackProcessor(List.of(
+                weatherCBDHandler,
+                temperatureCBDHandler,
+                humidityCBDHandler,
+                apparentTemperatureCBDHandler,
+                windSpeedCBDHandler,
+                precipTypeCBDHandler,
+                defaultCBDHandler
+        ));
+    }
+}
