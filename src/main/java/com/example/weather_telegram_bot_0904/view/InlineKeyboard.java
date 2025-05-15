@@ -1,5 +1,6 @@
 package com.example.weather_telegram_bot_0904.view;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -13,11 +14,13 @@ import java.util.List;
 
 @Component
 public class InlineKeyboard {
+
+    private final BotMessages botMessages = new BotMessages();
+
     //--------------------Метод для отключения загрузки у кнопки на меню------------------------------------------
     public AnswerCallbackQuery callback(Update update) {
-        CallbackQuery callbackQuery = update.getCallbackQuery();
         AnswerCallbackQuery answer = new AnswerCallbackQuery();
-        answer.setCallbackQueryId(callbackQuery.getId());
+        answer.setCallbackQueryId(update.getCallbackQuery().getId());
         return answer;
     }
 
@@ -25,9 +28,8 @@ public class InlineKeyboard {
     public SendMessage hermitageInlineKeyboardAb(long chat_id, String messageText) {
 
         // создаю объект сообщения
-        SendMessage message = new SendMessage();
-        message.setChatId(chat_id);
-        message.setText(messageText);
+
+        SendMessage message = botMessages.sendMessage(chat_id, messageText);
 
         // создаю объект встроенной клавиатуры
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
@@ -69,7 +71,7 @@ public class InlineKeyboard {
         inlineKeyboardButtonApparentTemperature.setCallbackData("ApparentTemperatureCBD");
 
 
-        // добавляю кнопку во второй ряд
+        // добавляю кнопки во второй ряд
         rowInline2.add(inlineKeyboardButtonTemperature);
         rowInline2.add(inlineKeyboardButtonHumidity);
         rowInline2.add(inlineKeyboardButtonApparentTemperature);
