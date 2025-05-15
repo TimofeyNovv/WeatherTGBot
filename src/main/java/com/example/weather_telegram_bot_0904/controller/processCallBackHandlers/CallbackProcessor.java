@@ -12,6 +12,7 @@ import java.util.List;
 
 @Component
 public class CallbackProcessor {
+
     private final List<CallbackHandlerInterface> handlers;
 
     public CallbackProcessor(List<CallbackHandlerInterface> handlers) {

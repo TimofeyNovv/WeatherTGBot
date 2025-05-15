@@ -9,6 +9,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CoordinatesService {
+
     private final UserCoordinatesRepository repository;
 
     public void saveLatitude(Long userId, Double latitude) {

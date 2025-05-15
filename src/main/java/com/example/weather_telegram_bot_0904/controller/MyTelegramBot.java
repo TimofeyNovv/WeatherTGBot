@@ -21,6 +21,7 @@ import java.util.ArrayList;
 @Component
 @AllArgsConstructor
 public class MyTelegramBot extends TelegramLongPollingBot {
+
     private final InlineKeyboard inlineKeyboard;
 
     private final URLInformation urlInformation;
@@ -29,7 +30,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final BotMessages botMessages;
 
-    private ArrayList<String> valuesWeather;
+    private final ArrayList<String> valuesWeather;
 
     private final CommandMenuCr commandMenuCr;
 

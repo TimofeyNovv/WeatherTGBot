@@ -17,7 +17,7 @@ public class UserCoordinatesEntity {
     private Long id;
 
     @Column(name = "user_id", unique = true) //unique = true означает, что значение уникально
-    private Long userId; //
+    private Long userId;
 
     private Double latitude = 50.0;
     private Double longitude = 30.0;

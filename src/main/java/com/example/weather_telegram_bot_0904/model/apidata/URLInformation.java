@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class URLInformation {
     @Value("${weather.apikey}")
     private String API_KEY;
+
 //------------------------------Метод получения информации о погоде-----------------------------------------------
     public ArrayList<String> getWeatherInformation(String[] requiredLines, double latitude, double longitude){
         ArrayList<String> values = new ArrayList<>();
@@ -44,11 +45,9 @@ public class URLInformation {
                 switch (requiredLines[i]){
                     case "temperature", "humidity", "apparentTemperature", "windSpeed"-> {
                         values.add(String.valueOf(currently.getDouble(requiredLines[i])));
-                        System.out.println(currently.getDouble(requiredLines[i]));
                     }
                     case "precipType" -> {
                         values.add(currently.getString(requiredLines[i]));
-                        System.out.println(currently.getString(requiredLines[i]));
                     }
                     default -> {
                         System.out.println("Нет такого значения");

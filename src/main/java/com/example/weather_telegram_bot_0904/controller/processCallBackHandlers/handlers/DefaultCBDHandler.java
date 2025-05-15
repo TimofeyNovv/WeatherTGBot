@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 @Component
 public class DefaultCBDHandler implements CallbackHandlerInterface {
+
     @Override
     public boolean canHandle(String call_data) {
         return true;

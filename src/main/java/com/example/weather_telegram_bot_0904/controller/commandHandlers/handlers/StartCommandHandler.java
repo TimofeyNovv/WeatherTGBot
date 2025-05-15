@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 public class StartCommandHandler implements CommandHandlerInterface {
 
-    private InlineKeyboard inlineKeyboard = new InlineKeyboard();
+    private final InlineKeyboard inlineKeyboard = new InlineKeyboard();
 
 
     @Override

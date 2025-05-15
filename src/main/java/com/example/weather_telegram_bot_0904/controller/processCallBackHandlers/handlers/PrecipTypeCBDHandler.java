@@ -22,7 +22,6 @@ public class PrecipTypeCBDHandler implements CallbackHandlerInterface {
         Long userId = update.getCallbackQuery().getFrom().getId();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         valuesWeather = urlInformation.getWeatherInformation(new String[]{"precipType"}, coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId));
-        System.out.println("PrecipTypeCBD");
         return botMessages.sendMessage(chatId, "Тип осадков - " + valuesWeather.get(0));
 
     }

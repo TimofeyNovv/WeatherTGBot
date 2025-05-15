@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 @Component
 public class ApparentTemperatureCBDHandler implements CallbackHandlerInterface {
+
     @Override
     public boolean canHandle(String call_data) {
         return call_data.equals("ApparentTemperatureCBD");
@@ -22,7 +23,6 @@ public class ApparentTemperatureCBDHandler implements CallbackHandlerInterface {
         Long userId = update.getCallbackQuery().getFrom().getId();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         valuesWeather = urlInformation.getWeatherInformation(new String[]{"apparentTemperature"}, coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId));
-        System.out.println("ApparentTemperatureCBD");
         return botMessages.sendMessage(chatId, "Температура сейчас ощущается как " + valuesWeather.get(0) + "°C");
     }
 }

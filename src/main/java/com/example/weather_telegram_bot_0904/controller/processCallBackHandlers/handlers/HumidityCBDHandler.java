@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 @Component
 public class HumidityCBDHandler implements CallbackHandlerInterface {
+
     @Override
     public boolean canHandle(String call_data) {
         return call_data.equals("HumidityCBD");
@@ -22,7 +23,6 @@ public class HumidityCBDHandler implements CallbackHandlerInterface {
         Long userId = update.getCallbackQuery().getFrom().getId();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         valuesWeather = urlInformation.getWeatherInformation(new String[]{"humidity"}, coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId));
-        System.out.println("HumidityCBD");
         return botMessages.sendMessage(chatId, "Влажность сейчас = " + valuesWeather.get(0) + "%");
     }
 }

@@ -14,7 +14,6 @@ import java.util.Map;
 @Component
 public class LatitudeCommandHandler implements CommandHandlerInterface {
 
-    private Map<Long, UserState> userState = new HashMap<>();
     @Override
     public boolean canHandle(String command, UserState userState) {
         return "/latitude".equals(command) && userState == UserState.DEFAULT;

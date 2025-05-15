@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserStateService {
+
     private final Map<Long, UserState> userStates = new ConcurrentHashMap<>();
 
     public void setUserState(Long userId, UserState state) {

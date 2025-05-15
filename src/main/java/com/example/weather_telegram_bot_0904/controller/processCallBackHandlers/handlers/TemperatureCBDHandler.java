@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.ArrayList;
 @Component
 public class TemperatureCBDHandler implements CallbackHandlerInterface {
+
     @Override
     public boolean canHandle(String call_data) {
         return call_data.equals("TemperatureCBD");
@@ -21,7 +22,6 @@ public class TemperatureCBDHandler implements CallbackHandlerInterface {
         Long userId = update.getCallbackQuery().getFrom().getId();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         valuesWeather = urlInformation.getWeatherInformation(new String[]{"temperature"}, coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId));
-        System.out.println("TemperatureCBD");
         return botMessages.sendMessage(chatId, "Температура сейчас = " + valuesWeather.get(0) + "°C");
     }
 }

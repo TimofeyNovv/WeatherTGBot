@@ -18,10 +18,11 @@ public class CommandProcessor {
     }
 
     public SendMessage process(Update update, UserStateService userStateService, BotMessages botMessages) {
-        Long chatId = update.getMessage().getChatId();
 
+        Long chatId = update.getMessage().getChatId();
         String command = update.getMessage().getText();
         UserState currentState = userStateService.getUserState(chatId);
+
         // Ищем подходящий обработчик
         return handlers.stream()
                 .filter(handler -> handler.canHandle(command, currentState))

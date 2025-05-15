@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 @Component
 public class WindSpeedCBDHandler implements CallbackHandlerInterface {
+
     @Override
     public boolean canHandle(String call_data) {
         return call_data.equals("WindSpeedCBD");
@@ -22,7 +23,6 @@ public class WindSpeedCBDHandler implements CallbackHandlerInterface {
         Long userId = update.getCallbackQuery().getFrom().getId();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         valuesWeather = urlInformation.getWeatherInformation(new String[]{"windSpeed"}, coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId));
-        System.out.println("WindSpeedCBD");
         return botMessages.sendMessage(chatId, "Скорость ветра сейчас = " + valuesWeather.get(0) + " м/с");
     }
 }
