@@ -1,7 +1,7 @@
 package com.example.weather_telegram_bot_0904.controller.processCallBackHandlers;
 
 import com.example.weather_telegram_bot_0904.model.apidata.URLInformation;
-import com.example.weather_telegram_bot_0904.model.database.CoordinatesService;
+import com.example.weather_telegram_bot_0904.model.database.service.CoordinatesService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

@@ -1,4 +1,4 @@
-package com.example.weather_telegram_bot_0904.model.database;
+package com.example.weather_telegram_bot_0904.model.database.repository;
 
 
 import com.example.weather_telegram_bot_0904.model.database.entity.UserCoordinatesEntity;

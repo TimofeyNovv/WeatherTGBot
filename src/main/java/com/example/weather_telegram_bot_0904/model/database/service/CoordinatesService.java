@@ -1,10 +1,9 @@
-package com.example.weather_telegram_bot_0904.model.database;
+package com.example.weather_telegram_bot_0904.model.database.service;
 
+import com.example.weather_telegram_bot_0904.model.database.repository.UserCoordinatesRepository;
 import com.example.weather_telegram_bot_0904.model.database.entity.UserCoordinatesEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

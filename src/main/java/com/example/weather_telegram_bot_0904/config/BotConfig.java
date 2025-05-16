@@ -31,7 +31,8 @@ public class BotConfig {
             LatitudeCommandHandler latitudeCommandHandler,
             LongitudeCommandHandler longitudeCommandHandler,
             TextInputHandler textInputHandler,
-            SettingsHandler settingsHandler
+            SettingsHandler settingsHandler,
+            RecommendationCommandHandler recommendationCommandHandler
     ) {
         return new CommandProcessor(List.of(
                 startHandler,
@@ -39,6 +40,7 @@ public class BotConfig {
                 longitudeCommandHandler,
                 textInputHandler,
                 settingsHandler,
+                recommendationCommandHandler,
                 defaultHandler
         ));
     }

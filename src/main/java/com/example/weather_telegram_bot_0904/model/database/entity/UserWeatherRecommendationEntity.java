@@ -6,20 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_coord")
-@Getter
+@Table(name = "user_recomend")
 @Setter
+@Getter
 @NoArgsConstructor
-public class UserCoordinatesEntity {
+public class UserWeatherRecommendationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", unique = true) //unique = true означает, что значение уникально
     private Long userId;
 
-    private Double latitude = 50.0;
-    private Double longitude = 30.0;
+    private Integer minValue;
+    private Integer maxValue;
+
+    private String recommendation;
+
 
 }
