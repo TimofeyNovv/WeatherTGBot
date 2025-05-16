@@ -4,7 +4,7 @@ import com.example.weather_telegram_bot_0904.config.BotConfig;
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandProcessor;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
 import com.example.weather_telegram_bot_0904.model.apidata.URLInformation;
-import com.example.weather_telegram_bot_0904.model.database.service.CoordinatesService;
+import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
 import com.example.weather_telegram_bot_0904.model.state.UserStateService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
 import com.example.weather_telegram_bot_0904.view.CommandMenuCr;
@@ -38,7 +38,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final UserStateService userStateService;
 
-    private final CoordinatesService coordinatesService;
+    private final UserCoordinatesService coordinatesService;
 
     private final CallbackProcessor callbackProcessor;
 

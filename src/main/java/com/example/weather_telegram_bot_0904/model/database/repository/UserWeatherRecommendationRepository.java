@@ -4,9 +4,12 @@ import com.example.weather_telegram_bot_0904.model.database.entity.UserWeatherRe
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UserWeatherRecommendationRepository extends JpaRepository<UserWeatherRecommendationEntity, Long> {
-    Optional<UserWeatherRecommendationEntity> findByUserId(Long userId);
+    Optional<UserWeatherRecommendationEntity> findByMinValue(Integer minValue);
+
+    List<UserWeatherRecommendationEntity> findByUserId(Long userId);
 }

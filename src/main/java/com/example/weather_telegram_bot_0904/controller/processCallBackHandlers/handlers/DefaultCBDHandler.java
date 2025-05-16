@@ -2,7 +2,7 @@ package com.example.weather_telegram_bot_0904.controller.processCallBackHandlers
 
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackHandlerInterface;
 import com.example.weather_telegram_bot_0904.model.apidata.URLInformation;
-import com.example.weather_telegram_bot_0904.model.database.service.CoordinatesService;
+import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -19,7 +19,7 @@ public class DefaultCBDHandler implements CallbackHandlerInterface {
     }
 
     @Override
-    public SendMessage handle(Update update, BotMessages botMessages, URLInformation urlInformation, ArrayList<String> valuesWeather,  CoordinatesService coordinatesService) {
+    public SendMessage handle(Update update, BotMessages botMessages, URLInformation urlInformation, ArrayList<String> valuesWeather,  UserCoordinatesService coordinatesService) {
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         return botMessages.sendMessage(chatId, "Нажата несуществующая кнопка");
     }

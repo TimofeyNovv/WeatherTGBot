@@ -18,7 +18,10 @@ public class UserWeatherRecommendationEntity {
 
     private Long userId;
 
+    @Column(name = "min_value", unique = true)
     private Integer minValue;
+
+    @Column(name = "max_value", unique = true)
     private Integer maxValue;
 
     private String recommendation;

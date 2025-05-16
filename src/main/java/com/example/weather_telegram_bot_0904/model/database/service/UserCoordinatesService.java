@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CoordinatesService {
+public class UserCoordinatesService {
 
     private final UserCoordinatesRepository repository;
 

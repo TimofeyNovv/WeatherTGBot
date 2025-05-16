@@ -1,7 +1,7 @@
 package com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers;
 
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandHandlerInterface;
-import com.example.weather_telegram_bot_0904.model.database.service.CoordinatesService;
+import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
 import com.example.weather_telegram_bot_0904.model.state.UserState;
 import com.example.weather_telegram_bot_0904.model.state.UserStateService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequiredArgsConstructor
 public class SettingsHandler implements CommandHandlerInterface {
 
-    private final CoordinatesService coordinatesService;
+    private final UserCoordinatesService coordinatesService;
 
     @Override
     public boolean canHandle(String command, UserState userState) {

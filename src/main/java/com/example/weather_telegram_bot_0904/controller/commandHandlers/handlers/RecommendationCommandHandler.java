@@ -23,7 +23,8 @@ public class RecommendationCommandHandler implements CommandHandlerInterface {
 
     @Override
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
-        service.saveRecommendation(update.getMessage().getFrom().getId(), 3,5, "надеть пальто");
+        //service.saveRecommendation(update.getMessage().getFrom().getId(), 4,9, "надеть кофту");
+        service.getRecommendation(update.getMessage().getFrom().getId());
         return botMessages.sendMessage(update.getMessage().getChatId(), "Сохранение в бд...");
     }
 }
