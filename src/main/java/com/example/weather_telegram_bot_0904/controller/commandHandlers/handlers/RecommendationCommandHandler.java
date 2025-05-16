@@ -15,7 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 @RequiredArgsConstructor
 public class RecommendationCommandHandler implements CommandHandlerInterface {
-    private final UserWeatherRecommendationService service;
+    private final UserWeatherRecommendationService weatherRecService;
     @Override
     public boolean canHandle(String command, UserState userState) {
         return "/recomm".equals(command);
@@ -24,7 +24,10 @@ public class RecommendationCommandHandler implements CommandHandlerInterface {
     @Override
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
         //service.saveRecommendation(update.getMessage().getFrom().getId(), 4,9, "надеть кофту");
-        service.getRecommendation(update.getMessage().getFrom().getId());
+        //service.getRecommendation(update.getMessage().getFrom().getId());
+        System.out.println(weatherRecService.getMaxValue(update.getMessage().getFrom().getId()));
+        System.out.println(weatherRecService.getMinValue(update.getMessage().getFrom().getId()));
+        System.out.println(weatherRecService.getRecommendation(6));
         return botMessages.sendMessage(update.getMessage().getChatId(), "Сохранение в бд...");
     }
 }

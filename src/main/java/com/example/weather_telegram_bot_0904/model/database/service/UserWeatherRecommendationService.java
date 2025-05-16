@@ -6,6 +6,7 @@ import com.example.weather_telegram_bot_0904.model.database.repository.UserWeath
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,7 +14,7 @@ import java.util.List;
 public class UserWeatherRecommendationService {
     private final UserWeatherRecommendationRepository repository;
 
-    public void saveRecommendation(Long userId, Integer minValue, Integer maxValue, String recommendation){
+    public void saveRecommendation(Long userId, Integer minValue, Integer maxValue, String recommendation) {
         UserWeatherRecommendationEntity weatherRecommendation = repository.findByMinValue(minValue)
                 .orElse(new UserWeatherRecommendationEntity());
         weatherRecommendation.setUserId(userId);
@@ -23,10 +24,33 @@ public class UserWeatherRecommendationService {
         repository.save(weatherRecommendation);
     }
 
-    public void getRecommendation(Long userId){
-        List<UserWeatherRecommendationEntity> weatherRecommendation = repository.findByUserId(userId);
-        for (int i = 0; i <= weatherRecommendation.size() - 1; i++){
-            System.out.println(weatherRecommendation.get(i).getMaxValue());
+    public List<Integer> getMinValue(Long userId) {
+        List<Integer> minValList = new ArrayList<>();
+        List<UserWeatherRecommendationEntity> entityList = repository.findByUserId(userId);
+        for (int i = 0; i <= entityList.size() - 1; i++){
+            minValList.add(entityList.get(i).getMinValue());
         }
+        return minValList;
+    }
+
+    public List<Integer> getMaxValue(Long userId){
+        List<Integer> maxValList = new ArrayList<>();
+        List<UserWeatherRecommendationEntity> entityList = repository.findByUserId(userId);
+        /*for (int i = 0; i <= entityList.size() - 1; i++){
+            if (entityList.get(i).getMaxValue().equals(maxValue)){
+                System.out.println("такие значения уже есть");
+                break;
+            }
+        }*/
+        for (int i = 0; i <= entityList.size() - 1; i++){
+            maxValList.add(entityList.get(i).getMaxValue());
+        }
+        return maxValList;
+    }
+
+    public String getRecommendation(Integer minValue){
+        UserWeatherRecommendationEntity userEntity = repository.findByMinValue(minValue)
+                .orElse(new UserWeatherRecommendationEntity());
+        return userEntity.getRecommendation();
     }
 }
