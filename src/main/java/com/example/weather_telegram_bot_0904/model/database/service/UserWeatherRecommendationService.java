@@ -53,4 +53,17 @@ public class UserWeatherRecommendationService {
                 .orElse(new UserWeatherRecommendationEntity());
         return userEntity.getRecommendation();
     }
+
+    public boolean setMinValue(Long userId, Integer minValue){
+        List<UserWeatherRecommendationEntity> userEntity =  repository.findByUserId(userId);
+        boolean isPresent = false;
+        for (int i = 0; i < userEntity.size(); i++){
+            if (userEntity.get(i).getMinValue().equals(minValue)){
+                System.out.println("Такое значение уже есть");
+                isPresent = true;
+                break;
+            }
+        }
+        return isPresent;
+    }
 }

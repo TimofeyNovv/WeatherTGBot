@@ -31,6 +31,11 @@ public class RangeInputHandler implements CommandHandlerInterface {
             String[] values = update.getMessage().getText().split(" ");
             System.out.println(values[0]);
             System.out.println(values[1]);
+            if (recommendationService.setMinValue(userId, Integer.valueOf(values[0]))){
+                System.out.println("Такое значение уже есть");
+            } else {
+                System.out.println("Такого значения нету");
+            }
             userStateService.setUserState(userId, UserState.DEFAULT);
             sendMessage = botMessages.sendMessage(chatId, "Успешно");
         }
