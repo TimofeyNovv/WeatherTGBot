@@ -24,7 +24,7 @@ public class UserWeatherRecommendationEntity {
     @Column(name = "max_value", unique = true)
     private Integer maxValue;
 
-    private String recommendation;
+    private String recommendation = "Для этого диапазона чисел пока что не было рекомендаций";
 
 
 }

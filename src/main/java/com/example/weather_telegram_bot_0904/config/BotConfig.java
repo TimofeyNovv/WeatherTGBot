@@ -1,6 +1,9 @@
 package com.example.weather_telegram_bot_0904.config;
 
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.*;
+import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.LatitudeInputHandler;
+import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.LongitudeInputHandler;
+import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.RangeInputHandler;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.handlers.*;
 import com.example.weather_telegram_bot_0904.model.state.UserState;
@@ -30,17 +33,23 @@ public class BotConfig {
             DefaultCommandHandler defaultHandler,
             LatitudeCommandHandler latitudeCommandHandler,
             LongitudeCommandHandler longitudeCommandHandler,
-            TextInputHandler textInputHandler,
             SettingsHandler settingsHandler,
-            RecommendationCommandHandler recommendationCommandHandler
+            RecommendationCommandHandler recommendationCommandHandler,
+            LatitudeInputHandler latitudeInputHandler,
+            LongitudeInputHandler longitudeInputHandler,
+            RangeInputHandler rangeInputHandler,
+            RangeCommandHandler rangeCommandHandler
     ) {
         return new CommandProcessor(List.of(
                 startHandler,
                 latitudeCommandHandler,
                 longitudeCommandHandler,
-                textInputHandler,
                 settingsHandler,
                 recommendationCommandHandler,
+                rangeCommandHandler,
+                latitudeInputHandler,
+                longitudeInputHandler,
+                rangeInputHandler,
                 defaultHandler
         ));
     }
