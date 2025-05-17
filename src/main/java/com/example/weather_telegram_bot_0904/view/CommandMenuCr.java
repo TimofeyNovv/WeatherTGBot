@@ -16,7 +16,8 @@ public class CommandMenuCr {
                 new BotCommand("/start", "Запустить бота и получить панель управления"),
                 new BotCommand("/latitude", "Ввести нужную широту"),
                 new BotCommand("/longitude", "Ввести нужную долготу"),
-                new BotCommand("/settings", "Узнать текущую долготу и ширину")
+                new BotCommand("/settings", "Узнать текущую долготу и ширину"),
+                new BotCommand("/range", "Ввести диапазон значений")
         );
 
         return new SetMyCommands(commands, new BotCommandScopeDefault(), null);

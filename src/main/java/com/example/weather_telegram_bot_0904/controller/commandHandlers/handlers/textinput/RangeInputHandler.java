@@ -31,13 +31,12 @@ public class RangeInputHandler implements CommandHandlerInterface {
             String[] values = update.getMessage().getText().split(" ");
             System.out.println(values[0]);
             System.out.println(values[1]);
-            if (recommendationService.setMinValue(userId, Integer.valueOf(values[0]))){
-                System.out.println("Такое значение уже есть");
+            if (recommendationService.setValues(userId, Integer.valueOf(values[0]), Integer.valueOf(values[1]))){
+                sendMessage = botMessages.sendMessage(chatId, "Вы ввели диапазон значений, который пересекается с другим вашим диапазоном");
             } else {
-                System.out.println("Такого значения нету");
+                sendMessage = botMessages.sendMessage(chatId, "Успешно");
             }
             userStateService.setUserState(userId, UserState.DEFAULT);
-            sendMessage = botMessages.sendMessage(chatId, "Успешно");
         }
         return sendMessage;
     }
