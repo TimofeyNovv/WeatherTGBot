@@ -12,35 +12,31 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 @RequiredArgsConstructor
-public class RangeInputHandler implements CommandHandlerInterface {
+public class RecommendationInputHandler implements CommandHandlerInterface {
 
     private final UserWeatherRecommendationService recommendationService;
-
     @Override
     public boolean canHandle(String command, UserState userState) {
-        return userState == UserState.AWAITING_INPUT_RANGE;
+        return userState == UserState.AWAITING_INPUT_RECOMMENDATION;
     }
 
     @Override
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
         SendMessage sendMessage = new SendMessage();
         Long chatId = update.getMessage().getChatId();
-        Long userId = update.getMessage().getFrom().getId();
-
-        if (userStateService.getUserState(chatId) == UserState.AWAITING_INPUT_RANGE){
-            String[] values = update.getMessage().getText().split(" ");
-            System.out.println(values[0]);
-            System.out.println(values[1]);
-            if (Integer.parseInt(values[0]) > Integer.parseInt(values[1])){
-                sendMessage = botMessages.sendMessage(chatId, "Пожалуйста вводите числа в порядке возрастания");
-            }
-            else if (recommendationService.setValues(userId, Integer.valueOf(values[0]), Integer.valueOf(values[1]))){
-                sendMessage = botMessages.sendMessage(chatId, "Вы ввели диапазон значений, который пересекается с другим вашим диапазоном");
+        String[] partsInput = String.valueOf(update.getMessage().getText()).split(" ", 2);
+        System.out.println(partsInput[0]);
+        System.out.println(partsInput[1]);
+        try {
+            if (recommendationService.setRecommendation(update.getMessage().getFrom().getId(), Integer.parseInt(partsInput[0]), partsInput[1])){
+                sendMessage = botMessages.sendMessage(chatId, "Успешно сохранено");
             } else {
-                sendMessage = botMessages.sendMessage(chatId, "Успешно");
+                sendMessage = botMessages.sendMessage(chatId, "Введённое вами число не подходит в ваши диапазоны");
             }
-            userStateService.setUserState(userId, UserState.DEFAULT);
+        } catch (NumberFormatException e) {
+            sendMessage = botMessages.sendMessage(chatId, "Пожалуйста введите сначала число и потом через пробел строку");
         }
+
         return sendMessage;
     }
 }

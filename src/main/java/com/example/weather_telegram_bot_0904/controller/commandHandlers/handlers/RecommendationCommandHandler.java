@@ -23,11 +23,8 @@ public class RecommendationCommandHandler implements CommandHandlerInterface {
 
     @Override
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
-        //service.saveRecommendation(update.getMessage().getFrom().getId(), 4,9, "надеть кофту");
-        //service.getRecommendation(update.getMessage().getFrom().getId());
-        System.out.println(weatherRecService.getMaxValue(update.getMessage().getFrom().getId()));
-        System.out.println(weatherRecService.getMinValue(update.getMessage().getFrom().getId()));
-        System.out.println(weatherRecService.getRecommendation(6));
-        return botMessages.sendMessage(update.getMessage().getChatId(), "Сохранение в бд...");
+        Long chatId = update.getMessage().getChatId();
+        userStateService.setUserState(chatId, UserState.AWAITING_INPUT_RECOMMENDATION);
+        return botMessages.sendMessage(chatId, "Введите число одно число из диапазона, для которого хотите установить рекомендацию по одежде и затем через пробел саму рекомендацию");
     }
 }
