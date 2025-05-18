@@ -18,7 +18,8 @@ public class CommandMenuCr {
                 new BotCommand("/longitude", "Ввести нужную долготу"),
                 new BotCommand("/settings", "Узнать текущую долготу и ширину"),
                 new BotCommand("/range", "Ввести диапазон значений"),
-                new BotCommand("/recomm", "Ввести рекомендацию")
+                new BotCommand("/recomm", "Ввести рекомендацию"),
+                new BotCommand("/exit", "Выйти из состояния ввод")
         );
 
         return new SetMyCommands(commands, new BotCommandScopeDefault(), null);
