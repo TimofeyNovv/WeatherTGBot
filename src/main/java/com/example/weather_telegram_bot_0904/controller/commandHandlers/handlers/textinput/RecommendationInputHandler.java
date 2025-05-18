@@ -25,21 +25,26 @@ public class RecommendationInputHandler implements CommandHandlerInterface {
         SendMessage sendMessage = new SendMessage();
         Long chatId = update.getMessage().getChatId();
         String[] partsInput = new String[0];
-        try {
-            partsInput = String.valueOf(update.getMessage().getText()).split(" ", 2);
-            if (recommendationService.setRecommendation(update.getMessage().getFrom().getId(), Integer.parseInt(partsInput[0]), partsInput[1])){
-                sendMessage = botMessages.sendMessage(chatId, "Успешно сохранено");
-            } else {
-                sendMessage = botMessages.sendMessage(chatId, "Введённое вами число не подходит в ваши диапазоны");
+        Long userId = update.getMessage().getFrom().getId();
+        if (update.getMessage().getText().equals("/exit")) {
+            userStateService.setUserState(userId, UserState.DEFAULT);
+            sendMessage = botMessages.sendMessage(chatId, "Успешный выход из состояния ввода");
+        } else {
+            try {
+                partsInput = String.valueOf(update.getMessage().getText()).split(" ", 2);
+                if (recommendationService.setRecommendation(userId, Integer.parseInt(partsInput[0]), partsInput[1])) {
+                    sendMessage = botMessages.sendMessage(chatId, "Успешно сохранено");
+                } else {
+                    sendMessage = botMessages.sendMessage(chatId, "Введённое вами число не подходит в ваши диапазоны");
+                }
+            } catch (NullPointerException e) {
+                sendMessage = botMessages.sendMessage(chatId, "Сообщение не содержит текста");
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                sendMessage = botMessages.sendMessage(chatId, "Пожалуйста, введите сначала число, а затем рекомендацию через пробел");
+            } catch (Exception e) {
+                System.out.println("Неизвестная ошибка в RecommendationInputHandler" + e.getMessage());
             }
-        } catch (NullPointerException e){
-            sendMessage = botMessages.sendMessage(chatId, "Сообщение не содержит текста");
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e){
-            sendMessage = botMessages.sendMessage(chatId, "Пожалуйста, введите сначала число, а затем рекомендацию через пробел");
-        } catch (Exception e) {
-            System.out.println("Неизвестная ошибка в RecommendationInputHandler" + e.getMessage());
         }
-
         return sendMessage;
     }
 }

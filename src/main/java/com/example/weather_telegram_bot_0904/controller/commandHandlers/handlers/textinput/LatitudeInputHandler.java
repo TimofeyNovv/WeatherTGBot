@@ -25,9 +25,12 @@ public class LatitudeInputHandler implements CommandHandlerInterface {
         Long chatId = update.getMessage().getChatId();
         SendMessage sendMessage = new SendMessage();
         Long userId = update.getMessage().getFrom().getId();
-        try {
-            double valueLatitude = Double.parseDouble(update.getMessage().getText());
-            if (userStateService.getUserState(chatId) == UserState.AWAITING_INPUT_LATITUDE) {
+        if (update.getMessage().getText().equals("/exit")) {
+            userStateService.setUserState(userId, UserState.DEFAULT);
+            sendMessage = botMessages.sendMessage(chatId, "Успешный выход из состояния ввода");
+        } else {
+            try {
+                double valueLatitude = Double.parseDouble(update.getMessage().getText());
                 if (valueLatitude < -90.0 || valueLatitude > 90.0) {
                     sendMessage = botMessages.sendMessage(chatId, "Ошибка, широта может быть в диапазоне от -90 до 90");
                 } else {
@@ -35,11 +38,10 @@ public class LatitudeInputHandler implements CommandHandlerInterface {
                     coordinatesService.saveLatitude(userId, valueLatitude);
                     sendMessage = botMessages.sendMessage(userId, "Широта сохранена: " + coordinatesService.getLatitude(userId) + "°");
                 }
+            } catch (NumberFormatException e) {
+                sendMessage = botMessages.sendMessage(chatId, "Ошибка! Введите число.");
             }
-        } catch (NumberFormatException e) {
-            sendMessage = botMessages.sendMessage(chatId, "Ошибка! Введите число.");
         }
-
         return sendMessage;
     }
 }

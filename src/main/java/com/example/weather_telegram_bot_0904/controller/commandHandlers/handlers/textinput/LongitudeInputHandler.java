@@ -27,10 +27,12 @@ public class LongitudeInputHandler implements CommandHandlerInterface {
         Long chatId = update.getMessage().getChatId();
         UserState state = userStateService.getUserState(chatId);
         Long userId = update.getMessage().getFrom().getId();
-
-        try {
-            double value = Double.parseDouble(update.getMessage().getText());
-            if (state == UserState.AWAITING_INPUT_LONGITUDE) {
+        if (update.getMessage().getText().equals("/exit")) {
+            userStateService.setUserState(userId, UserState.DEFAULT);
+            sendMessage = botMessages.sendMessage(chatId, "Успешный выход из состояния ввода");
+        } else {
+            try {
+                double value = Double.parseDouble(update.getMessage().getText());
                 if (value < -180.0 || value > 180.0) {
                     sendMessage = botMessages.sendMessage(chatId, "Ошибка, долгота может быть в диапазоне от -180 до 180");
                 } else {
@@ -38,9 +40,9 @@ public class LongitudeInputHandler implements CommandHandlerInterface {
                     coordinatesService.saveLongitude(userId, value);
                     sendMessage = botMessages.sendMessage(userId, "Долгота сохранена: " + coordinatesService.getLongitude(userId) + "°");
                 }
+            } catch (NumberFormatException e) {
+                sendMessage = botMessages.sendMessage(chatId, "Ошибка! Введите число.");
             }
-        } catch (NumberFormatException e) {
-            sendMessage = botMessages.sendMessage(chatId, "Ошибка! Введите число.");
         }
         return sendMessage;
     }
