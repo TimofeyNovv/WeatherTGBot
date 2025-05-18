@@ -1,7 +1,7 @@
 package com.example.weather_telegram_bot_0904.model.database.service;
 
-import com.example.weather_telegram_bot_0904.model.database.repository.UserCoordinatesRepository;
 import com.example.weather_telegram_bot_0904.model.database.entity.UserCoordinatesEntity;
+import com.example.weather_telegram_bot_0904.model.database.repository.UserCoordinatesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

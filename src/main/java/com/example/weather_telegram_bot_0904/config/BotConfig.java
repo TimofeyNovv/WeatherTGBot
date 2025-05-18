@@ -1,5 +1,6 @@
 package com.example.weather_telegram_bot_0904.config;
 
+import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandProcessor;
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.*;
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.LatitudeInputHandler;
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.LongitudeInputHandler;
@@ -7,8 +8,6 @@ import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.RecommendationInputHandler;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.handlers.*;
-import com.example.weather_telegram_bot_0904.model.state.UserState;
-import com.example.weather_telegram_bot_0904.controller.commandHandlers.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

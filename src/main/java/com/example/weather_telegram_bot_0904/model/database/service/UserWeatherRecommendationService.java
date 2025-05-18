@@ -3,10 +3,8 @@ package com.example.weather_telegram_bot_0904.model.database.service;
 
 import com.example.weather_telegram_bot_0904.model.database.entity.UserWeatherRecommendationEntity;
 import com.example.weather_telegram_bot_0904.model.database.repository.UserWeatherRecommendationRepository;
-import com.example.weather_telegram_bot_0904.view.BotMessages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.util.ArrayList;
 import java.util.List;

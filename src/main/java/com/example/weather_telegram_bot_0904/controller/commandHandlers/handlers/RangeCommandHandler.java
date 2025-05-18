@@ -25,7 +25,7 @@ public class RangeCommandHandler implements CommandHandlerInterface {
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
         Long chatId = update.getMessage().getChatId();
         userStateService.setUserState(chatId, UserState.AWAITING_INPUT_RANGE);
-        return botMessages.sendMessage(update.getMessage().getChatId(), "Пожалуйста введите два числа через, пробел в порядке возрастания. Первое число будет обозначать начало диапазона второе конец диапазона");
+        return botMessages.sendMessage(update.getMessage().getChatId(), "Пожалуйста введите два числа через, пробел в порядке возрастания. Первое число будет обозначать начало диапазона второе конец диапазона(можно вводить температуру от -91 до 56)");
     }
 }
 
