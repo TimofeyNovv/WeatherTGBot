@@ -60,7 +60,9 @@ public class UserWeatherRecommendationService {
                 break;
             }
         }
+        System.out.println("isPresent 63" + isPresent);
         if (!isPresent) {
+            System.out.println("isPresent 65 =" + isPresent);
             System.out.println("сохранение в бд");
             UserWeatherRecommendationEntity weatherRecommendation = new UserWeatherRecommendationEntity();
             weatherRecommendation.setMinValue(minValue);

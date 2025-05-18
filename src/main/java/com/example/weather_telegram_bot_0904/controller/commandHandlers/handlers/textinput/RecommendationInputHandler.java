@@ -29,7 +29,7 @@ public class RecommendationInputHandler implements CommandHandlerInterface {
             partsInput = String.valueOf(update.getMessage().getText()).split(" ", 2);
             if (recommendationService.setRecommendation(update.getMessage().getFrom().getId(), Integer.parseInt(partsInput[0]), partsInput[1])){
                 sendMessage = botMessages.sendMessage(chatId, "Успешно сохранено");
-            } else if (!recommendationService.setRecommendation(update.getMessage().getFrom().getId(), Integer.parseInt(partsInput[0]), partsInput[1])){
+            } else {
                 sendMessage = botMessages.sendMessage(chatId, "Введённое вами число не подходит в ваши диапазоны");
             }
         } catch (NullPointerException e){

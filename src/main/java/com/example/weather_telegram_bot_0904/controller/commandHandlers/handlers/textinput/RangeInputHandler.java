@@ -26,21 +26,30 @@ public class RangeInputHandler implements CommandHandlerInterface {
         SendMessage sendMessage = new SendMessage();
         Long chatId = update.getMessage().getChatId();
         Long userId = update.getMessage().getFrom().getId();
+        String[] values = new String[0];
+        try {
 
-        if (userStateService.getUserState(chatId) == UserState.AWAITING_INPUT_RANGE) {
-
-                String[] values = update.getMessage().getText().split(" ");
-                System.out.println(values[0]);
-                System.out.println(values[1]);
-                if (Integer.parseInt(values[0]) > Integer.parseInt(values[1])) {
-                    sendMessage = botMessages.sendMessage(chatId, "Пожалуйста вводите числа в порядке возрастания");
-                } else if (recommendationService.setValues(userId, Integer.valueOf(values[0]), Integer.valueOf(values[1]))) {
-                    sendMessage = botMessages.sendMessage(chatId, "Вы ввели диапазон значений, который пересекается с другим вашим диапазоном");
-                } else if (!recommendationService.setValues(userId, Integer.valueOf(values[0]), Integer.valueOf(values[1]))){
-                    sendMessage = botMessages.sendMessage(chatId, "Успешно");
-                }
+            values = update.getMessage().getText().split(" ");
+            Integer value0 = Integer.parseInt(values[0]);
+            Integer value1 = Integer.parseInt(values[1]);
+            boolean isPresent = recommendationService.setValues(userId, value0, value1);
+            if (values.length != 2) {
+                sendMessage = botMessages.sendMessage(chatId, "Введите ровно 2 числа");
+            } else if (value0 > value1) {
+                sendMessage = botMessages.sendMessage(chatId, "Пожалуйста вводите числа в порядке возрастания");
+            } else if (isPresent) {
+                sendMessage = botMessages.sendMessage(chatId, "Вы ввели диапазон значений, который пересекается с другим вашим диапазоном");
+            } else {
                 userStateService.setUserState(userId, UserState.DEFAULT);
+                sendMessage = botMessages.sendMessage(chatId, "Успешно");
+            }
+
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            sendMessage = botMessages.sendMessage(chatId, "Введите пожалуйста два числа через пробел");
+        } catch (Exception e) {
+            System.out.println("Произошла непредвиденная ошибка в RangeInputHandler" + e.getMessage());
         }
+
         return sendMessage;
     }
 }
