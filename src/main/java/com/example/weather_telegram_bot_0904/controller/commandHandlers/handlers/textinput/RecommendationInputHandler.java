@@ -24,17 +24,20 @@ public class RecommendationInputHandler implements CommandHandlerInterface {
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
         SendMessage sendMessage = new SendMessage();
         Long chatId = update.getMessage().getChatId();
-        String[] partsInput = String.valueOf(update.getMessage().getText()).split(" ", 2);
-        System.out.println(partsInput[0]);
-        System.out.println(partsInput[1]);
+        String[] partsInput = new String[0];
         try {
+            partsInput = String.valueOf(update.getMessage().getText()).split(" ", 2);
             if (recommendationService.setRecommendation(update.getMessage().getFrom().getId(), Integer.parseInt(partsInput[0]), partsInput[1])){
                 sendMessage = botMessages.sendMessage(chatId, "Успешно сохранено");
-            } else {
+            } else if (!recommendationService.setRecommendation(update.getMessage().getFrom().getId(), Integer.parseInt(partsInput[0]), partsInput[1])){
                 sendMessage = botMessages.sendMessage(chatId, "Введённое вами число не подходит в ваши диапазоны");
             }
-        } catch (NumberFormatException e) {
-            sendMessage = botMessages.sendMessage(chatId, "Пожалуйста введите сначала число и потом через пробел строку");
+        } catch (NullPointerException e){
+            sendMessage = botMessages.sendMessage(chatId, "Сообщение не содержит текста");
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e){
+            sendMessage = botMessages.sendMessage(chatId, "Пожалуйста, введите сначала число, а затем рекомендацию через пробел");
+        } catch (Exception e) {
+            System.out.println("Неизвестная ошибка в RecommendationInputHandler" + e.getMessage());
         }
 
         return sendMessage;

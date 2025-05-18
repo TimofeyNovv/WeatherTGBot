@@ -27,19 +27,19 @@ public class RangeInputHandler implements CommandHandlerInterface {
         Long chatId = update.getMessage().getChatId();
         Long userId = update.getMessage().getFrom().getId();
 
-        if (userStateService.getUserState(chatId) == UserState.AWAITING_INPUT_RANGE){
-            String[] values = update.getMessage().getText().split(" ");
-            System.out.println(values[0]);
-            System.out.println(values[1]);
-            if (Integer.parseInt(values[0]) > Integer.parseInt(values[1])){
-                sendMessage = botMessages.sendMessage(chatId, "Пожалуйста вводите числа в порядке возрастания");
-            }
-            else if (recommendationService.setValues(userId, Integer.valueOf(values[0]), Integer.valueOf(values[1]))){
-                sendMessage = botMessages.sendMessage(chatId, "Вы ввели диапазон значений, который пересекается с другим вашим диапазоном");
-            } else {
-                sendMessage = botMessages.sendMessage(chatId, "Успешно");
-            }
-            userStateService.setUserState(userId, UserState.DEFAULT);
+        if (userStateService.getUserState(chatId) == UserState.AWAITING_INPUT_RANGE) {
+
+                String[] values = update.getMessage().getText().split(" ");
+                System.out.println(values[0]);
+                System.out.println(values[1]);
+                if (Integer.parseInt(values[0]) > Integer.parseInt(values[1])) {
+                    sendMessage = botMessages.sendMessage(chatId, "Пожалуйста вводите числа в порядке возрастания");
+                } else if (recommendationService.setValues(userId, Integer.valueOf(values[0]), Integer.valueOf(values[1]))) {
+                    sendMessage = botMessages.sendMessage(chatId, "Вы ввели диапазон значений, который пересекается с другим вашим диапазоном");
+                } else if (!recommendationService.setValues(userId, Integer.valueOf(values[0]), Integer.valueOf(values[1]))){
+                    sendMessage = botMessages.sendMessage(chatId, "Успешно");
+                }
+                userStateService.setUserState(userId, UserState.DEFAULT);
         }
         return sendMessage;
     }
