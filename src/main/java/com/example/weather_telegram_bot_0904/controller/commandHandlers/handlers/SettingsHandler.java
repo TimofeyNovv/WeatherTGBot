@@ -18,12 +18,14 @@ public class SettingsHandler implements CommandHandlerInterface {
 
     @Override
     public boolean canHandle(String command, UserState userState) {
-        return "/settings".equals(command);
+        return "/settings".equals(command) && userState == UserState.DEFAULT;
     }
 
     @Override
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
         Long userId = update.getMessage().getFrom().getId();
-        return botMessages.sendMessage(update.getMessage().getChatId(), "Текущая высота = " + coordinatesService.getLatitude(userId)+ "\n Текущая широта = " + coordinatesService.getLongitude(userId));
+        return botMessages.sendMessage(update.getMessage().getChatId(), "Текущая высота = " +
+                coordinatesService.getLatitude(userId) +
+                "\n Текущая широта = " + coordinatesService.getLongitude(userId));
     }
 }

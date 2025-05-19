@@ -37,7 +37,7 @@ public class LongitudeInputHandler implements CommandHandlerInterface {
                     sendMessage = botMessages.sendMessage(chatId, "Ошибка, долгота может быть в диапазоне от -180 до 180");
                 } else {
                     userStateService.setUserState(userId, UserState.DEFAULT);
-                    coordinatesService.saveLongitude(userId, value);
+                    coordinatesService.saveLongitude(userId, value, chatId);
                     sendMessage = botMessages.sendMessage(userId, "Долгота сохранена: " + coordinatesService.getLongitude(userId) + "°");
                 }
             } catch (NumberFormatException e) {

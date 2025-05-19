@@ -35,7 +35,7 @@ public class LatitudeInputHandler implements CommandHandlerInterface {
                     sendMessage = botMessages.sendMessage(chatId, "Ошибка, широта может быть в диапазоне от -90 до 90");
                 } else {
                     userStateService.setUserState(userId, UserState.DEFAULT);
-                    coordinatesService.saveLatitude(userId, valueLatitude);
+                    coordinatesService.saveLatitude(userId, valueLatitude, chatId);
                     sendMessage = botMessages.sendMessage(userId, "Широта сохранена: " + coordinatesService.getLatitude(userId) + "°");
                 }
             } catch (NumberFormatException e) {

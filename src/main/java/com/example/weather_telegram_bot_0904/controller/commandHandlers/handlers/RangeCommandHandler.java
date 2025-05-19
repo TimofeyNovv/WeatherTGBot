@@ -18,14 +18,17 @@ public class RangeCommandHandler implements CommandHandlerInterface {
 
     @Override
     public boolean canHandle(String command, UserState userState) {
-        return "/range".equals(command);
+        return "/range".equals(command) && userState == UserState.DEFAULT;
     }
 
     @Override
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
         Long chatId = update.getMessage().getChatId();
         userStateService.setUserState(chatId, UserState.AWAITING_INPUT_RANGE);
-        return botMessages.sendMessage(update.getMessage().getChatId(), "Пожалуйста введите два числа через, пробел в порядке возрастания. Первое число будет обозначать начало диапазона второе конец диапазона(можно вводить температуру от -91 до 56)");
+        return botMessages.sendMessage(update.getMessage().getChatId(), "Пожалуйста введите дв" +
+                "а числа через, пробел в порядке возрастания. Первое " +
+                "число будет обозначать начало диапазона второе конец" +
+                " диапазона(можно вводить температуру от -91 до 56)");
     }
 }
 

@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface UserCoordinatesRepository extends JpaRepository<UserCoordinatesEntity, Long> {
     Optional<UserCoordinatesEntity> findByUserId(Long userId);
+
+    Optional<UserCoordinatesEntity> findByChatId(Long chatId);
 }

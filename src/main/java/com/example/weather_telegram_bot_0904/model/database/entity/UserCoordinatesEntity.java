@@ -1,14 +1,12 @@
 package com.example.weather_telegram_bot_0904.model.database.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "user_coord")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class UserCoordinatesEntity {
 
@@ -18,6 +16,9 @@ public class UserCoordinatesEntity {
 
     @Column(name = "user_id", unique = true) //unique = true означает, что значение уникально
     private Long userId;
+
+    @Column(name = "chat_id", unique = true) //unique = true означает, что значение уникально
+    private Long chatId;
 
     private Double latitude = 50.0;
     private Double longitude = 30.0;

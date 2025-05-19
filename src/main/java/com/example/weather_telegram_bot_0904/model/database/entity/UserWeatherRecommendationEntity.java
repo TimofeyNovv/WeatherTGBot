@@ -1,14 +1,12 @@
 package com.example.weather_telegram_bot_0904.model.database.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "user_recomend")
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 public class UserWeatherRecommendationEntity {
 
