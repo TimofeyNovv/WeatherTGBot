@@ -42,10 +42,15 @@ public class UserWeatherRecommendationService {
         return maxValList;
     }
 
-    public String getRecommendation(Integer minValue) {
-        UserWeatherRecommendationEntity userEntity = repository.findByMinValue(minValue)
-                .orElse(new UserWeatherRecommendationEntity());
-        return userEntity.getRecommendation();
+    public String getRecommendation(Long userId, Integer value) {
+        String recommendation = "нет рекомендации";
+        List<UserWeatherRecommendationEntity> userEntity = repository.findByUserId(userId);
+        for (int i = 0; i < userEntity.size(); i++){
+            if (value >= userEntity.get(i).getMinValue() && value <= userEntity.get(i).getMaxValue()){
+                recommendation = userEntity.get(i).getRecommendation();
+            }
+        }
+        return recommendation;
     }
 
     public boolean setValues(Long userId, Integer minValue, Integer maxValue) {
