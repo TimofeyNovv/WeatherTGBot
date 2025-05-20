@@ -65,6 +65,7 @@ public class BotConfig {
         ApparentTemperatureCBDHandler apparentTemperatureCBDHandler,
         WindSpeedCBDHandler windSpeedCBDHandler,
         PrecipTypeCBDHandler precipTypeCBDHandler,
+        RecommendationCBDHandler recommendationCBDHandler,
         DefaultCBDHandler defaultCBDHandler
     ) {
         return new CallbackProcessor(List.of(
@@ -74,6 +75,7 @@ public class BotConfig {
                 apparentTemperatureCBDHandler,
                 windSpeedCBDHandler,
                 precipTypeCBDHandler,
+                recommendationCBDHandler,
                 defaultCBDHandler
         ));
     }

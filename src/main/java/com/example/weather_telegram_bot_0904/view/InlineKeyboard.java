@@ -94,7 +94,7 @@ public class InlineKeyboard {
         List<InlineKeyboardButton> rowInLine4 = new ArrayList<>();
         InlineKeyboardButton inlineKeyboardButtonRecommendation = new InlineKeyboardButton();
         inlineKeyboardButtonRecommendation.setText("Recommendation");
-        inlineKeyboardButtonRecommendation.setCallbackData("Recommendation");
+        inlineKeyboardButtonRecommendation.setCallbackData("RecommendationCBD");
 
         rowInLine4.add(inlineKeyboardButtonRecommendation);
 
