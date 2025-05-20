@@ -1,10 +1,8 @@
 package com.example.weather_telegram_bot_0904.view;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -39,7 +37,7 @@ public class InlineKeyboard {
 
 
         // создаю список с кнопками для первого ряда
-        List<InlineKeyboardButton> rowInline1 = new ArrayList<>();
+        List<InlineKeyboardButton> rowInLine1 = new ArrayList<>();
 
         // создаю первую кнопку для в ряду
         InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
@@ -52,10 +50,10 @@ public class InlineKeyboard {
 
 
         // добавляю кнопку в первый ряд
-        rowInline1.add(inlineKeyboardButton1);
+        rowInLine1.add(inlineKeyboardButton1);
 
         // создаю список с кнопками для второго ряда
-        List<InlineKeyboardButton> rowInline2 = new ArrayList<>();
+        List<InlineKeyboardButton> rowInLine2 = new ArrayList<>();
 
         // создаю кнопки для второго ряда
         InlineKeyboardButton inlineKeyboardButtonTemperature = new InlineKeyboardButton();
@@ -72,13 +70,13 @@ public class InlineKeyboard {
 
 
         // добавляю кнопки во второй ряд
-        rowInline2.add(inlineKeyboardButtonTemperature);
-        rowInline2.add(inlineKeyboardButtonHumidity);
-        rowInline2.add(inlineKeyboardButtonApparentTemperature);
+        rowInLine2.add(inlineKeyboardButtonTemperature);
+        rowInLine2.add(inlineKeyboardButtonHumidity);
+        rowInLine2.add(inlineKeyboardButtonApparentTemperature);
 
 
         // создаю список с кнопками для третьего ряда
-        List<InlineKeyboardButton> rowInline3 = new ArrayList<>();
+        List<InlineKeyboardButton> rowInLine3 = new ArrayList<>();
 
         InlineKeyboardButton inlineKeyboardButtonWindSpeed = new InlineKeyboardButton();
         inlineKeyboardButtonWindSpeed.setText("WindSpeed");
@@ -90,14 +88,22 @@ public class InlineKeyboard {
 
 
         // добавляю кнопку в третий ряд
-        rowInline3.add(inlineKeyboardButtonPrecipType);
-        rowInline3.add(inlineKeyboardButtonWindSpeed);
+        rowInLine3.add(inlineKeyboardButtonPrecipType);
+        rowInLine3.add(inlineKeyboardButtonWindSpeed);
+
+        List<InlineKeyboardButton> rowInLine4 = new ArrayList<>();
+        InlineKeyboardButton inlineKeyboardButtonRecommendation = new InlineKeyboardButton();
+        inlineKeyboardButtonRecommendation.setText("Recommendation");
+        inlineKeyboardButtonRecommendation.setCallbackData("Recommendation");
+
+        rowInLine4.add(inlineKeyboardButtonRecommendation);
 
 
         // настраиваем разметку всей клавиатуры
-        rowsInline.add(rowInline1);
-        rowsInline.add(rowInline2);
-        rowsInline.add(rowInline3);
+        rowsInline.add(rowInLine1);
+        rowsInline.add(rowInLine2);
+        rowsInline.add(rowInLine3);
+        rowsInline.add(rowInLine4);
         // добавляем встроенную клавиатуру в сообщение
         markupInline.setKeyboard(rowsInline);
         message.setReplyMarkup(markupInline);
