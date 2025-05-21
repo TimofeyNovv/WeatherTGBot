@@ -43,7 +43,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final CallbackProcessor callbackProcessor;
 
-    //--------------------Метод для обработки действий пользователя---------------------------------------------
     @Override
     public void onUpdateReceived(Update update) {
         //Если пользователь нажал на кнопку
@@ -65,7 +64,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    @PostConstruct // Вызывается автоматически после создания бина
+    @PostConstruct
     public void init() {
         try {
             //Создаю кнопку "Меню"

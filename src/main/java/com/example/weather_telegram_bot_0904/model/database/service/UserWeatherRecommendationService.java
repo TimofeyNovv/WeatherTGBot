@@ -14,16 +14,6 @@ import java.util.List;
 public class UserWeatherRecommendationService {
     private final UserWeatherRecommendationRepository repository;
 
-    public void saveRecommendation(Long userId, Integer minValue, Integer maxValue, String recommendation) {
-        UserWeatherRecommendationEntity weatherRecommendation = repository.findByMinValue(minValue)
-                .orElse(new UserWeatherRecommendationEntity());
-        weatherRecommendation.setUserId(userId);
-        weatherRecommendation.setMaxValue(maxValue);
-        weatherRecommendation.setMinValue(minValue);
-        weatherRecommendation.setRecommendation(recommendation);
-        repository.save(weatherRecommendation);
-    }
-
     public List<Integer> getMinValue(Long userId) {
         List<Integer> minValList = new ArrayList<>();
         List<UserWeatherRecommendationEntity> entityList = repository.findByUserId(userId);
@@ -63,10 +53,7 @@ public class UserWeatherRecommendationService {
                 break;
             }
         }
-        System.out.println("isPresent 63" + isPresent);
         if (!isPresent) {
-            System.out.println("isPresent 65 =" + isPresent);
-            System.out.println("сохранение в бд");
             UserWeatherRecommendationEntity weatherRecommendation = new UserWeatherRecommendationEntity();
             weatherRecommendation.setMinValue(minValue);
             weatherRecommendation.setMaxValue(maxValue);
