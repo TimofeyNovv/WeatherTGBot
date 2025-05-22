@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.ArrayList;
-
 @Component
 public class WeatherCBDHandler implements CallbackHandlerInterface {
 
@@ -19,10 +17,11 @@ public class WeatherCBDHandler implements CallbackHandlerInterface {
     }
 
     @Override
-    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, ArrayList<String> valuesWeather, UserCoordinatesService coordinatesService) {
+    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesService coordinatesService) {
         Long userId = update.getCallbackQuery().getFrom().getId();
+        Double latitude = coordinatesService.getLatitude(userId);
+        Double longitude = coordinatesService.getLongitude(userId);
         long chatId = update.getCallbackQuery().getMessage().getChatId();
-        //valuesWeather = urlInformation.getWeatherInformation(new String[]{"temperature", "humidity", "apparentTemperature", "windSpeed", "precipType"}, coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId));
         return botMessages.sendMessage(chatId, "Температура - " + "°C" + "\nВлажность - " + "%" + "\nТемпература ощущается как - " + "°C" + "\nСкорость ветра - " + "м/с" + "\nОсадки -");
     }
 }

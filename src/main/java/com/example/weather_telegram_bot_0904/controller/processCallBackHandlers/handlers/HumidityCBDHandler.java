@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.ArrayList;
-
 @Component
 public class HumidityCBDHandler implements CallbackHandlerInterface {
 
@@ -19,9 +17,11 @@ public class HumidityCBDHandler implements CallbackHandlerInterface {
     }
 
     @Override
-    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, ArrayList<String> valuesWeather, UserCoordinatesService coordinatesService) {
+    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesService coordinatesService) {
         Long userId = update.getCallbackQuery().getFrom().getId();
+        Double latitude = coordinatesService.getLatitude(userId);
+        Double longitude = coordinatesService.getLongitude(userId);
         long chatId = update.getCallbackQuery().getMessage().getChatId();
-        return botMessages.sendMessage(chatId, "Влажность сейчас = " + dataURLService.getHumidity(1,1) + "%");
+        return botMessages.sendMessage(chatId, "Влажность сейчас = " + dataURLService.getHumidity(latitude, longitude) + "%");
     }
 }

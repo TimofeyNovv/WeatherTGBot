@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.ArrayList;
-
 @Component
 public class ApparentTemperatureCBDHandler implements CallbackHandlerInterface {
 
@@ -19,9 +17,11 @@ public class ApparentTemperatureCBDHandler implements CallbackHandlerInterface {
     }
 
     @Override
-    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, ArrayList<String> valuesWeather, UserCoordinatesService coordinatesService) {
+    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesService coordinatesService) {
         Long userId = update.getCallbackQuery().getFrom().getId();
-        long chatId = update.getCallbackQuery().getMessage().getChatId();
-        return botMessages.sendMessage(chatId, "Температура сейчас ощущается как " + dataURLService.getApparentTemperature(1,1) + "°C");
+        Double latitude = coordinatesService.getLatitude(userId);
+        Double longitude = coordinatesService.getLongitude(userId);
+        return botMessages.sendMessage(update.getCallbackQuery().getMessage().getChatId(), "Температура сейчас ощущается как "
+                + dataURLService.getApparentTemperature(latitude,longitude) + "°C");
     }
 }

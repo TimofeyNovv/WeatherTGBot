@@ -10,7 +10,6 @@ import java.util.List;
 @Component
 public class CommandMenuCr {
 
-    //----------------------------Метод для создания кнопки меню у поля ввода-----------------------------------------
     public SetMyCommands setupCommandMenu() {
         List<BotCommand> commands = List.of(
                 new BotCommand("/start", "Запустить бота и получить панель управления"),

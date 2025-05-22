@@ -28,8 +28,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final BotMessages botMessages;
 
-    private final ArrayList<String> valuesWeather;
-
     private final CommandMenuCr commandMenuCr;
 
     private final CommandProcessor commandProcessor;
@@ -47,7 +45,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         //Если пользователь нажал на кнопку
         if (update.hasCallbackQuery()) {
             try {
-                execute(callbackProcessor.process(update, botMessages, dataURLService, valuesWeather, coordinatesService));
+                execute(callbackProcessor.process(update, botMessages, dataURLService, coordinatesService));
                 execute(inlineKeyboard.callback(update));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);

@@ -6,10 +6,8 @@ import com.example.weather_telegram_bot_0904.view.BotMessages;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.ArrayList;
-
 public interface CallbackHandlerInterface {
     boolean canHandle(String call_data);
 
-    SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, ArrayList<String> valuesWeather, UserCoordinatesService coordinatesService);
+    SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesService coordinatesService );
 }

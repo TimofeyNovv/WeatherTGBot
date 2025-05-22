@@ -7,7 +7,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 @Component
 public class BotMessages {
 
-    //--------------------Метод для отправки сообщений пользователю------------------------------------------
     public SendMessage sendMessage(Long chatId, String message) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(chatId));

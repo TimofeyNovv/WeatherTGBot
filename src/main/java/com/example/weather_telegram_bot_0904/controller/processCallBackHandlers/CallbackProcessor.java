@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -19,13 +18,13 @@ public class CallbackProcessor {
         this.handlers = handlers;
     }
 
-    public SendMessage process(Update update, BotMessages botMessages, DataURLService dataURLService, ArrayList<String> valuesWeather, UserCoordinatesService coordinatesService){
+    public SendMessage process(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesService userCoordinatesService){
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         String call_data = update.getCallbackQuery().getData();
         return handlers.stream()
                 .filter(handler -> handler.canHandle(call_data))
                 .findFirst()
-                .map(handler -> handler.handle(update, botMessages, dataURLService, valuesWeather, coordinatesService))
+                .map(handler -> handler.handle(update, botMessages, dataURLService, userCoordinatesService))
                 .orElseGet(() -> new SendMessage(String.valueOf(chatId), "Неизвестная команда callback processor"));
     }
 }
