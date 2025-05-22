@@ -40,6 +40,7 @@ public class UserCoordinatesService {
                 .orElse(new UserCoordinatesEntity());
         return coordinates.getLatitude();
     }
+
     public Long getUserId(Long chatId){
         UserCoordinatesEntity coordinates = repository.findByChatId(chatId)
                 .orElse(new UserCoordinatesEntity());

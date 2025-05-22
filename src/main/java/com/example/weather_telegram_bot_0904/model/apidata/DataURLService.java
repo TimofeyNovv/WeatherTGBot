@@ -1,7 +1,6 @@
 package com.example.weather_telegram_bot_0904.model.apidata;
 
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 @Service

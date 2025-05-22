@@ -32,22 +32,30 @@ public class UserWeatherRecommendationService {
         return maxValList;
     }
 
-    public String getRecommendation(Long userId, Integer value) {
-        String recommendation = "нет рекомендации";
+    public String getRecommendation(Long id) {
+        UserWeatherRecommendationEntity userEntity = repository.findById(id)
+                .orElse(new UserWeatherRecommendationEntity());
+
+        return userEntity.getRecommendation();
+    }
+
+    public Long ifRecommendation(Long userId, Double value) {
+        Long ifhave = 0L;
         List<UserWeatherRecommendationEntity> userEntity = repository.findByUserId(userId);
-        for (int i = 0; i < userEntity.size(); i++){
-            if (value >= userEntity.get(i).getMinValue() && value <= userEntity.get(i).getMaxValue()){
-                recommendation = userEntity.get(i).getRecommendation();
+        for (int i = 0; i < userEntity.size(); i++) {
+            if (value >= userEntity.get(i).getMinValue() && value <= userEntity.get(i).getMaxValue()) {
+                ifhave = userEntity.get(i).getId();
+                break;
             }
         }
-        return recommendation;
+        return ifhave;
     }
 
     public boolean setValues(Long userId, Integer minValue, Integer maxValue) {
         List<UserWeatherRecommendationEntity> userEntity = repository.findByUserId(userId);
         boolean isPresent = false;
         for (int i = 0; i < userEntity.size(); i++) {
-            if (userEntity.get(i).getMinValue() <= minValue && minValue <= userEntity.get(i).getMaxValue() || userEntity.get(i).getMinValue() <= minValue && maxValue <= userEntity.get(i).getMaxValue() ) {
+            if (userEntity.get(i).getMinValue() <= minValue && minValue <= userEntity.get(i).getMaxValue() || userEntity.get(i).getMinValue() <= minValue && maxValue <= userEntity.get(i).getMaxValue()) {
                 System.out.println("Значение пересекается с уже введёнными");
                 isPresent = true;
                 break;
@@ -62,19 +70,20 @@ public class UserWeatherRecommendationService {
         }
         return isPresent;
     }
-    public boolean setRecommendation(Long userId, int inputValue, String recommendation){
+
+    public boolean setRecommendation(Long userId, int inputValue, String recommendation) {
         boolean exists = false;
         List<UserWeatherRecommendationEntity> userEntity = repository.findByUserId(userId);
-        for(int i = 0; i < userEntity.size(); i++){
-            for (int value = userEntity.get(i).getMinValue(); value <= userEntity.get(i).getMaxValue(); value++){
-                if (inputValue == value){
+        for (int i = 0; i < userEntity.size(); i++) {
+            for (int value = userEntity.get(i).getMinValue(); value <= userEntity.get(i).getMaxValue(); value++) {
+                if (inputValue == value) {
                     userEntity.get(i).setRecommendation(recommendation);
                     repository.save(userEntity.get(i));
                     exists = true;
                     break;
                 }
             }
-            if (exists){
+            if (exists) {
                 break;
             }
         }

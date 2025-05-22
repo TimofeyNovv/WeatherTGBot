@@ -23,6 +23,14 @@ public class RecommendationCBDHandler implements CallbackHandlerInterface {
 
     @Override
     public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesService coordinatesService) {
-        return botMessages.sendMessage(update.getCallbackQuery().getMessage().getChatId(), service.getRecommendation(update.getCallbackQuery().getFrom().getId(), 160));
+        String recommendation;
+        Long userId = update.getCallbackQuery().getFrom().getId();
+        Long idRecommendation = service.ifRecommendation(update.getCallbackQuery().getFrom().getId(), dataURLService.getTemperature(coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId)));
+        if (idRecommendation == 0) {
+            recommendation = "для текущей температуры нету рекомендаций";
+        } else {
+            recommendation = service.getRecommendation(idRecommendation);
+        }
+        return botMessages.sendMessage(update.getCallbackQuery().getMessage().getChatId(), recommendation);
     }
 }
