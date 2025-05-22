@@ -3,8 +3,7 @@ package com.example.weather_telegram_bot_0904.controller;
 import com.example.weather_telegram_bot_0904.config.BotConfig;
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandProcessor;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
-import com.example.weather_telegram_bot_0904.model.apidata.URLInformation;
-import com.example.weather_telegram_bot_0904.model.database.service.SendWeatherService;
+import com.example.weather_telegram_bot_0904.model.apidata.DataURLService;
 import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
 import com.example.weather_telegram_bot_0904.model.state.UserStateService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
@@ -25,8 +24,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final InlineKeyboard inlineKeyboard;
 
-    private final URLInformation urlInformation;
-
     private final BotConfig botConfig;
 
     private final BotMessages botMessages;
@@ -43,12 +40,14 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final CallbackProcessor callbackProcessor;
 
+    private final DataURLService dataURLService;
+
     @Override
     public void onUpdateReceived(Update update) {
         //Если пользователь нажал на кнопку
         if (update.hasCallbackQuery()) {
             try {
-                execute(callbackProcessor.process(update, botMessages, urlInformation, valuesWeather, coordinatesService));
+                execute(callbackProcessor.process(update, botMessages, dataURLService, valuesWeather, coordinatesService));
                 execute(inlineKeyboard.callback(update));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);

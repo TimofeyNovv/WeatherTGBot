@@ -2,11 +2,8 @@ package com.example.weather_telegram_bot_0904.controller.processCallBackHandlers
 
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackHandlerInterface;
 import com.example.weather_telegram_bot_0904.model.apidata.DataURLService;
-import com.example.weather_telegram_bot_0904.model.apidata.URLDataFetcher;
-import com.example.weather_telegram_bot_0904.model.apidata.URLInformation;
 import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -14,9 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.ArrayList;
 
 @Component
-@RequiredArgsConstructor
 public class TemperatureCBDHandler implements CallbackHandlerInterface {
-    private final DataURLService service;
 
     @Override
     public boolean canHandle(String call_data) {
@@ -24,11 +19,9 @@ public class TemperatureCBDHandler implements CallbackHandlerInterface {
     }
 
     @Override
-    public SendMessage handle(Update update, BotMessages botMessages, URLInformation urlInformation, ArrayList<String> valuesWeather, UserCoordinatesService coordinatesService) {
+    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, ArrayList<String> valuesWeather, UserCoordinatesService coordinatesService) {
         Long userId = update.getCallbackQuery().getFrom().getId();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
-        valuesWeather = urlInformation.getWeatherInformation(new String[]{"temperature"}, coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId));
-        //return botMessages.sendMessage(chatId, "Температура сейчас = " + valuesWeather.get(0) + "°C");
-        return botMessages.sendMessage(chatId, "Температура сейчас = " + service.getTemperature(50,30) + "°C");
+        return botMessages.sendMessage(chatId, "Температура сейчас = " + dataURLService.getTemperature(50,30) + "°C");
     }
 }

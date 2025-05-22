@@ -1,7 +1,7 @@
 package com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.handlers;
 
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackHandlerInterface;
-import com.example.weather_telegram_bot_0904.model.apidata.URLInformation;
+import com.example.weather_telegram_bot_0904.model.apidata.DataURLService;
 import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
 import org.springframework.stereotype.Component;
@@ -19,10 +19,9 @@ public class WindSpeedCBDHandler implements CallbackHandlerInterface {
     }
 
     @Override
-    public SendMessage handle(Update update, BotMessages botMessages, URLInformation urlInformation, ArrayList<String> valuesWeather,  UserCoordinatesService coordinatesService) {
+    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, ArrayList<String> valuesWeather, UserCoordinatesService coordinatesService) {
         Long userId = update.getCallbackQuery().getFrom().getId();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
-        valuesWeather = urlInformation.getWeatherInformation(new String[]{"windSpeed"}, coordinatesService.getLatitude(userId), coordinatesService.getLongitude(userId));
-        return botMessages.sendMessage(chatId, "Скорость ветра сейчас = " + valuesWeather.get(0) + " м/с");
+        return botMessages.sendMessage(chatId, "Скорость ветра сейчас = " + dataURLService.getWindSpeed(1,1) + " м/с");
     }
 }
