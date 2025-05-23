@@ -25,7 +25,7 @@ public class SendWeatherService {
         this.startCommandHandler = startCommandHandler;
     }
 
-    @Scheduled(cron = "0 31 18 * * *")
+    @Scheduled(cron = "0 00 09 * * *")
     public void sendWeatherDaily(){
         try {
             myTelegramBot.execute(botMessages.sendMessage(startCommandHandler.getChatId(), "Работает" ));

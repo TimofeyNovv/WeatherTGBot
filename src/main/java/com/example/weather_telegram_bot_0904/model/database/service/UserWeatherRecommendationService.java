@@ -34,8 +34,7 @@ public class UserWeatherRecommendationService {
 
     public String getRecommendation(Long id) {
         UserWeatherRecommendationEntity userEntity = repository.findById(id)
-                .orElse(new UserWeatherRecommendationEntity());
-
+                .orElseThrow(() -> new RuntimeException("Пользователь с id " + id + " не найден"));
         return userEntity.getRecommendation();
     }
 

@@ -18,7 +18,6 @@ public class DefaultCBDHandler implements CallbackHandlerInterface {
 
     @Override
     public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesService coordinatesService) {
-        long chatId = update.getCallbackQuery().getMessage().getChatId();
-        return botMessages.sendMessage(chatId, "Нажата несуществующая кнопка");
+        return botMessages.sendMessage(update.getCallbackQuery().getMessage().getChatId(), "Нажата несуществующая кнопка");
     }
 }

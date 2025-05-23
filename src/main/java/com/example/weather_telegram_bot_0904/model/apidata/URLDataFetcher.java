@@ -37,8 +37,7 @@ public class URLDataFetcher {
 
             currently = rootObject.getJSONObject("currently");
 
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return currently;
