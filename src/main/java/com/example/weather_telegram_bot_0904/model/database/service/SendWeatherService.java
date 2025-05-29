@@ -19,13 +19,13 @@ public class SendWeatherService {
     private final UserCoordinatesService userCoordinatesService;
     private StartCommandHandler startCommandHandler;
 
-    public SendWeatherService(MyTelegramBot myTelegramBot, UserCoordinatesService userCoordinatesService,StartCommandHandler startCommandHandler) {
+    public SendWeatherService(MyTelegramBot myTelegramBot, UserCoordinatesService userCoordinatesService, StartCommandHandler startCommandHandler) {
         this.myTelegramBot = myTelegramBot;
         this.userCoordinatesService = userCoordinatesService;
         this.startCommandHandler = startCommandHandler;
     }
 
-    @Scheduled(cron = "0 00 09 * * *")
+    @Scheduled(cron = "0 42 19 * * *")
     public void sendWeatherDaily(){
         try {
             myTelegramBot.execute(botMessages.sendMessage(startCommandHandler.getChatId(), "Работает" ));

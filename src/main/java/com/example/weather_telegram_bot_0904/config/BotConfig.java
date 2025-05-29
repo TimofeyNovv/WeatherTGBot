@@ -29,7 +29,7 @@ public class BotConfig {
 
     @Bean
     public CommandProcessor commandProcessor(
-            StartCommandHandler startHandler,
+            ButtonsCommandHandler buttonsCommandHandler,
             DefaultCommandHandler defaultHandler,
             LatitudeCommandHandler latitudeCommandHandler,
             LongitudeCommandHandler longitudeCommandHandler,
@@ -39,10 +39,11 @@ public class BotConfig {
             LongitudeInputHandler longitudeInputHandler,
             RangeInputHandler rangeInputHandler,
             RangeCommandHandler rangeCommandHandler,
+            StartCommandHandler startCommandHandler,
             RecommendationInputHandler recommendationInputHandler
     ) {
         return new CommandProcessor(List.of(
-                startHandler,
+                buttonsCommandHandler,
                 latitudeCommandHandler,
                 longitudeCommandHandler,
                 settingsHandler,
@@ -52,6 +53,7 @@ public class BotConfig {
                 longitudeInputHandler,
                 rangeInputHandler,
                 recommendationInputHandler,
+                startCommandHandler,
                 defaultHandler
         ));
     }

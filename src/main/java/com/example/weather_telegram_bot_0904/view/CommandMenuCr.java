@@ -12,7 +12,7 @@ public class CommandMenuCr {
 
     public SetMyCommands setupCommandMenu() {
         List<BotCommand> commands = List.of(
-                new BotCommand("/start", "Запустить бота и получить панель управления"),
+                new BotCommand("/buttons", "Получить панель управления"),
                 new BotCommand("/latitude", "Ввести нужную широту"),
                 new BotCommand("/longitude", "Ввести нужную долготу"),
                 new BotCommand("/settings", "Узнать текущую долготу и ширину"),
