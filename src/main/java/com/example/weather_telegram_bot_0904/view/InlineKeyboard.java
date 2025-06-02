@@ -26,7 +26,6 @@ public class InlineKeyboard {
     public SendMessage hermitageInlineKeyboardAb(long chat_id, String messageText) {
 
         // создаю объект сообщения
-
         SendMessage message = botMessages.sendMessage(chat_id, messageText);
 
         // создаю объект встроенной клавиатуры

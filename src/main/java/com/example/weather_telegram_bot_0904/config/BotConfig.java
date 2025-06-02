@@ -2,10 +2,9 @@ package com.example.weather_telegram_bot_0904.config;
 
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandProcessor;
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.*;
-import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.LatitudeInputHandler;
-import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.LongitudeInputHandler;
-import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.RangeInputHandler;
-import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.RecommendationInputHandler;
+import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.*;
+import com.example.weather_telegram_bot_0904.controller.processCalbackRefresh.CallbackRefreshProcessor;
+import com.example.weather_telegram_bot_0904.controller.processCalbackRefresh.handlers.Button1CBDHandler;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.handlers.*;
 import lombok.Data;
@@ -40,6 +39,7 @@ public class BotConfig {
             RangeInputHandler rangeInputHandler,
             RangeCommandHandler rangeCommandHandler,
             StartCommandHandler startCommandHandler,
+            ButtonsTestCommandHandler buttonsTestCommandHandler,
             RecommendationInputHandler recommendationInputHandler
     ) {
         return new CommandProcessor(List.of(
@@ -54,6 +54,7 @@ public class BotConfig {
                 rangeInputHandler,
                 recommendationInputHandler,
                 startCommandHandler,
+                buttonsTestCommandHandler,
                 defaultHandler
         ));
     }
@@ -80,5 +81,16 @@ public class BotConfig {
                 recommendationCBDHandler,
                 defaultCBDHandler
         ));
+    }
+
+    @Bean
+    CallbackRefreshProcessor callbackRefreshProcessor(
+            Button1CBDHandler button1CBDHandler
+    ){
+        return new CallbackRefreshProcessor(
+                List.of(
+                        button1CBDHandler
+                )
+        );
     }
 }

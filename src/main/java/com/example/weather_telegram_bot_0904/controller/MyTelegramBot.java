@@ -2,6 +2,7 @@ package com.example.weather_telegram_bot_0904.controller;
 
 import com.example.weather_telegram_bot_0904.config.BotConfig;
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandProcessor;
+import com.example.weather_telegram_bot_0904.controller.processCalbackRefresh.CallbackRefreshProcessor;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
 import com.example.weather_telegram_bot_0904.model.apidata.DataURLService;
 import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
@@ -13,10 +14,15 @@ import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -40,15 +46,25 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final DataURLService dataURLService;
 
+    private final CallbackRefreshProcessor callbackRefreshProcessor;
+
     @Override
     public void onUpdateReceived(Update update) {
         //Если пользователь нажал на кнопку
         if (update.hasCallbackQuery()) {
-            try {
-                execute(callbackProcessor.process(update, botMessages, dataURLService, coordinatesService));
-                execute(inlineKeyboard.callback(update));
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
+            if (callbackRefreshProcessor.process(update) != null){
+                try {
+                    execute(callbackRefreshProcessor.process(update));
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                try {
+                    execute(callbackProcessor.process(update, botMessages, dataURLService, coordinatesService));
+                    execute(inlineKeyboard.callback(update));
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         //Если пользователь что-то ввёл
