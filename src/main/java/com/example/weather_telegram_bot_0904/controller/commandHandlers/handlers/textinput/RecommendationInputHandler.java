@@ -33,6 +33,7 @@ public class RecommendationInputHandler implements CommandHandlerInterface {
             try {
                 partsInput = String.valueOf(update.getMessage().getText()).split(" ", 2);
                 if (recommendationService.setRecommendation(userId, Integer.parseInt(partsInput[0]), partsInput[1])) {
+                    userStateService.setUserState(userId, UserState.DEFAULT);
                     sendMessage = botMessages.sendMessage(chatId, "Успешно сохранено");
                 } else {
                     sendMessage = botMessages.sendMessage(chatId, "Введённое вами число не подходит в ваши диапазоны");

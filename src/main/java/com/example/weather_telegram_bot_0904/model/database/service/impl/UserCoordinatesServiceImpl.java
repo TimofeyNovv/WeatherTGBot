@@ -35,28 +35,28 @@ public class UserCoordinatesServiceImpl implements UserCoordinatesService {
     @Override
     public Double getLongitude(Long userId){
         UserCoordinatesEntity coordinates = repository.findByUserId(userId)
-                .orElse(new UserCoordinatesEntity());
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         return coordinates.getLongitude();
     }
 
     @Override
     public Double getLatitude(Long userId){
         UserCoordinatesEntity coordinates = repository.findByUserId(userId)
-                .orElse(new UserCoordinatesEntity());
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         return coordinates.getLatitude();
     }
 
     @Override
     public Long getUserId(Long chatId){
         UserCoordinatesEntity coordinates = repository.findByChatId(chatId)
-                .orElse(new UserCoordinatesEntity());
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         return coordinates.getUserId();
     }
 
     @Override
     public Long getChatId(Long userId){
-        UserCoordinatesEntity coordinates = repository.findByChatId(userId)
-                .orElse(new UserCoordinatesEntity());
+        UserCoordinatesEntity coordinates = repository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         return coordinates.getUserId();
     }
 }
