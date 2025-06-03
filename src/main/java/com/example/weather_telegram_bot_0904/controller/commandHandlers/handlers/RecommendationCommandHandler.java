@@ -1,7 +1,7 @@
 package com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers;
 
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandHandlerInterface;
-import com.example.weather_telegram_bot_0904.model.database.service.UserWeatherRecommendationService;
+import com.example.weather_telegram_bot_0904.model.database.service.impl.UserWeatherRecommendationServiceImpl;
 import com.example.weather_telegram_bot_0904.model.state.UserState;
 import com.example.weather_telegram_bot_0904.model.state.UserStateService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
@@ -15,7 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 @RequiredArgsConstructor
 public class RecommendationCommandHandler implements CommandHandlerInterface {
-    private final UserWeatherRecommendationService weatherRecService;
+    private final UserWeatherRecommendationServiceImpl weatherRecService;
     @Override
     public boolean canHandle(String command, UserState userState) {
         return "/recomm".equals(command) && userState == UserState.DEFAULT;

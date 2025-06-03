@@ -5,7 +5,7 @@ import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandP
 import com.example.weather_telegram_bot_0904.controller.processCalbackRefresh.CallbackRefreshProcessor;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
 import com.example.weather_telegram_bot_0904.model.apidata.DataURLService;
-import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
+import com.example.weather_telegram_bot_0904.model.database.service.impl.UserCoordinatesServiceImpl;
 import com.example.weather_telegram_bot_0904.model.state.UserStateService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
 import com.example.weather_telegram_bot_0904.view.CommandMenuCr;
@@ -14,15 +14,8 @@ import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -40,7 +33,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final UserStateService userStateService;
 
-    private final UserCoordinatesService coordinatesService;
+    private final UserCoordinatesServiceImpl coordinatesService;
 
     private final CallbackProcessor callbackProcessor;
 

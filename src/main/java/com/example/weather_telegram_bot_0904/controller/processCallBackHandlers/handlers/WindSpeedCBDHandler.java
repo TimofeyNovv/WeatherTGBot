@@ -2,7 +2,7 @@ package com.example.weather_telegram_bot_0904.controller.processCallBackHandlers
 
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackHandlerInterface;
 import com.example.weather_telegram_bot_0904.model.apidata.DataURLService;
-import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
+import com.example.weather_telegram_bot_0904.model.database.service.impl.UserCoordinatesServiceImpl;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -17,7 +17,7 @@ public class WindSpeedCBDHandler implements CallbackHandlerInterface {
     }
 
     @Override
-    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesService coordinatesService) {
+    public SendMessage handle(Update update, BotMessages botMessages, DataURLService dataURLService, UserCoordinatesServiceImpl coordinatesService) {
         Long userId = update.getCallbackQuery().getFrom().getId();
         Double latitude = coordinatesService.getLatitude(userId);
         Double longitude = coordinatesService.getLongitude(userId);
