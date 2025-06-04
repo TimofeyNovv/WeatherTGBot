@@ -15,4 +15,5 @@ public interface UserCoordinatesService {
      Long getChatId(Long userId);
 
     void deleteUser(Long userId);
+
     }

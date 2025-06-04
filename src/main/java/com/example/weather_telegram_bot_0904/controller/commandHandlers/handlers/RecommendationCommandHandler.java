@@ -15,7 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 @RequiredArgsConstructor
 public class RecommendationCommandHandler implements CommandHandlerInterface {
-    private final UserWeatherRecommendationServiceImpl weatherRecService;
+
     @Override
     public boolean canHandle(String command, UserState userState) {
         return "/recomm".equals(command) && userState == UserState.DEFAULT;

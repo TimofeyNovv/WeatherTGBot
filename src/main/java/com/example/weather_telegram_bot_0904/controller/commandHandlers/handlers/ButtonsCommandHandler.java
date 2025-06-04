@@ -4,7 +4,7 @@ import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandH
 import com.example.weather_telegram_bot_0904.model.state.UserState;
 import com.example.weather_telegram_bot_0904.model.state.UserStateService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
-import com.example.weather_telegram_bot_0904.view.InlineKeyboard;
+import com.example.weather_telegram_bot_0904.view.inlineKeyboards.InlineKeyboardWeatherButtons;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Getter
 public class ButtonsCommandHandler implements CommandHandlerInterface {
 
-    private final InlineKeyboard inlineKeyboard = new InlineKeyboard();
+    private final InlineKeyboardWeatherButtons inlineKeyboard = new InlineKeyboardWeatherButtons();
 
     @Override
     public boolean canHandle(String command, UserState userState) {

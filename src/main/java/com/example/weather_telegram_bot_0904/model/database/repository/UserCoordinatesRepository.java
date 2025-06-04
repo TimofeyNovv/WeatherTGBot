@@ -11,7 +11,5 @@ import java.util.Optional;
 public interface UserCoordinatesRepository extends JpaRepository<UserCoordinatesEntity, Long> {
     Optional<UserCoordinatesEntity> findByUserId(Long userId);
 
-    Optional<UserCoordinatesEntity> findByChatId(Long chatId);
-
     void delete(UserCoordinatesEntity user);
 }

@@ -9,7 +9,7 @@ import com.example.weather_telegram_bot_0904.model.database.service.impl.UserCoo
 import com.example.weather_telegram_bot_0904.model.state.UserStateService;
 import com.example.weather_telegram_bot_0904.view.BotMessages;
 import com.example.weather_telegram_bot_0904.view.CommandMenuCr;
-import com.example.weather_telegram_bot_0904.view.InlineKeyboard;
+import com.example.weather_telegram_bot_0904.view.inlineKeyboards.InlineKeyboardWeatherButtons;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @AllArgsConstructor
 public class MyTelegramBot extends TelegramLongPollingBot {
 
-    private final InlineKeyboard inlineKeyboard;
+    private final InlineKeyboardWeatherButtons inlineKeyboard;
 
     private final BotConfig botConfig;
 

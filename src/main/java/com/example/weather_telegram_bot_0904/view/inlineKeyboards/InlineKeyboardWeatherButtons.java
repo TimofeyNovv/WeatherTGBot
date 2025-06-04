@@ -1,5 +1,6 @@
-package com.example.weather_telegram_bot_0904.view;
+package com.example.weather_telegram_bot_0904.view.inlineKeyboards;
 
+import com.example.weather_telegram_bot_0904.view.BotMessages;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class InlineKeyboard {
+public class InlineKeyboardWeatherButtons {
 
     private final BotMessages botMessages = new BotMessages();
 
@@ -28,7 +29,6 @@ public class InlineKeyboard {
         // создаю объект сообщения
         SendMessage message = botMessages.sendMessage(chat_id, messageText);
 
-        // создаю объект встроенной клавиатуры
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
 
         // создаю список списков кнопок, который впоследствии объединит ряды кнопок

@@ -10,10 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserWeatherRecommendationRepository extends JpaRepository<UserWeatherRecommendationEntity, Long> {
-    Optional<UserWeatherRecommendationEntity> findByMinValue(Integer minValue);
 
     @NonNull
     Optional<UserWeatherRecommendationEntity> findById(@NonNull Long id);
-
-    List<UserWeatherRecommendationEntity> findByUserId(Long userId);
 }

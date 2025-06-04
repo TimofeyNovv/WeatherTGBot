@@ -1,6 +1,5 @@
 package com.example.weather_telegram_bot_0904.model.database.service;
 
-import java.util.List;
 
 public interface UserWeatherRecommendationService {
 
