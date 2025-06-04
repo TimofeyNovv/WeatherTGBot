@@ -27,5 +27,5 @@ public class SettingsHandler implements CommandHandlerInterface {
         return botMessages.sendMessage(update.getMessage().getChatId(), "Текущая высота = " +
                 coordinatesService.getLatitude(userId) +
                 "\n Текущая широта = " + coordinatesService.getLongitude(userId));
-    }
+         }
 }

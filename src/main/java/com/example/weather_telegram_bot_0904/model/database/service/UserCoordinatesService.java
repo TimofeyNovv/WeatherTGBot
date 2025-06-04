@@ -1,16 +1,18 @@
 package com.example.weather_telegram_bot_0904.model.database.service;
 
+import com.example.weather_telegram_bot_0904.model.database.entity.UserCoordinatesEntity;
+
 public interface UserCoordinatesService {
 
     void saveLatitude(Long userId, Double latitude, Long chatId);
 
-    public void saveLongitude(Long userId, Double longitude, Long chatId);
+     void saveLongitude(Long userId, Double longitude, Long chatId);
 
-    public Double getLongitude(Long userId);
+     Double getLongitude(Long userId);
 
-    public Double getLatitude(Long userId);
+     Double getLatitude(Long userId);
 
-    public Long getChatId(Long userId);
+     Long getChatId(Long userId);
 
-    public Long getUserId(Long chatId);
+    void deleteUser(Long userId);
     }

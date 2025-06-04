@@ -14,15 +14,19 @@ public class UserWeatherRecommendationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserCoordinatesEntity user;
 
-    @Column(name = "min_value", unique = true)
+    @Column(name = "min_value")
     private Integer minValue;
 
-    @Column(name = "max_value", unique = true)
+    @Column(name = "max_value")
     private Integer maxValue;
 
-    private String recommendation = "Для этого диапазона чисел пока что не было рекомендаций";
+    private String recommendation;
 
-
+    public void setUser(UserCoordinatesEntity user) {
+        this.user = user;
+    }
 }

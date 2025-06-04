@@ -5,6 +5,7 @@ import com.example.weather_telegram_bot_0904.model.database.repository.UserCoord
 import com.example.weather_telegram_bot_0904.model.database.service.UserCoordinatesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,6 +14,7 @@ public class UserCoordinatesServiceImpl implements UserCoordinatesService {
     private final UserCoordinatesRepository repository;
 
     @Override
+    @Transactional
     public void saveLatitude(Long userId, Double latitude, Long chatId) {
         UserCoordinatesEntity coordinates = repository.findByUserId(userId)
                 .orElse(new UserCoordinatesEntity());
@@ -23,6 +25,7 @@ public class UserCoordinatesServiceImpl implements UserCoordinatesService {
     }
 
     @Override
+    @Transactional
     public void saveLongitude(Long userId, Double longitude, Long chatId) {
         UserCoordinatesEntity coordinates = repository.findByUserId(userId)
                 .orElse(new UserCoordinatesEntity());
@@ -33,6 +36,7 @@ public class UserCoordinatesServiceImpl implements UserCoordinatesService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Double getLongitude(Long userId){
         UserCoordinatesEntity coordinates = repository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
@@ -40,6 +44,7 @@ public class UserCoordinatesServiceImpl implements UserCoordinatesService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Double getLatitude(Long userId){
         UserCoordinatesEntity coordinates = repository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
@@ -47,16 +52,20 @@ public class UserCoordinatesServiceImpl implements UserCoordinatesService {
     }
 
     @Override
-    public Long getUserId(Long chatId){
-        UserCoordinatesEntity coordinates = repository.findByChatId(chatId)
+    @Transactional
+    public void deleteUser(Long userId) {
+        UserCoordinatesEntity coordinates =  repository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
-        return coordinates.getUserId();
+        repository.delete(coordinates);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Long getChatId(Long userId){
         UserCoordinatesEntity coordinates = repository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         return coordinates.getUserId();
     }
+
+
 }

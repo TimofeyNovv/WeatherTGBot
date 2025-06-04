@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "user_coord")
 @Data
@@ -23,4 +26,6 @@ public class UserCoordinatesEntity {
     private Double latitude = 50.0;
     private Double longitude = 30.0;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserWeatherRecommendationEntity> recommendations = new ArrayList<>();
 }

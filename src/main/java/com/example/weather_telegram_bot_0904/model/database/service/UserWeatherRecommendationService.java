@@ -4,10 +4,6 @@ import java.util.List;
 
 public interface UserWeatherRecommendationService {
 
-    public List<Integer> getMinValue(Long userId);
-
-    public List<Integer> getMaxValue(Long userId);
-
     public String getRecommendation(Long id);
 
     public Long ifRecommendation(Long userId, Double value);

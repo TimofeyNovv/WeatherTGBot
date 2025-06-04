@@ -12,4 +12,6 @@ public interface UserCoordinatesRepository extends JpaRepository<UserCoordinates
     Optional<UserCoordinatesEntity> findByUserId(Long userId);
 
     Optional<UserCoordinatesEntity> findByChatId(Long chatId);
+
+    void delete(UserCoordinatesEntity user);
 }

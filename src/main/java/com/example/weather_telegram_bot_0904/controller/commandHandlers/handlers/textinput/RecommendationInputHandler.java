@@ -22,20 +22,28 @@ public class RecommendationInputHandler implements CommandHandlerInterface {
 
     @Override
     public SendMessage handle(Update update, UserStateService userStateService, BotMessages botMessages) {
+        System.out.println("1");
         SendMessage sendMessage = new SendMessage();
         Long chatId = update.getMessage().getChatId();
         String[] partsInput = new String[0];
         Long userId = update.getMessage().getFrom().getId();
+        System.out.println("2");
         if (update.getMessage().getText().equals("/exit")) {
+            System.out.println("3");
             userStateService.setUserState(userId, UserState.DEFAULT);
             sendMessage = botMessages.sendMessage(chatId, "Успешный выход из состояния ввода");
         } else {
+            System.out.println("4");
             try {
+                System.out.println("5");
                 partsInput = String.valueOf(update.getMessage().getText()).split(" ", 2);
+                System.out.println("6");
                 if (recommendationService.setRecommendation(userId, Integer.parseInt(partsInput[0]), partsInput[1])) {
+                    System.out.println("7");
                     userStateService.setUserState(userId, UserState.DEFAULT);
                     sendMessage = botMessages.sendMessage(chatId, "Успешно сохранено");
                 } else {
+                    System.out.println("8");
                     sendMessage = botMessages.sendMessage(chatId, "Введённое вами число не подходит в ваши диапазоны");
                 }
             } catch (NullPointerException e) {

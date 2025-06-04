@@ -1,11 +1,14 @@
 package com.example.weather_telegram_bot_0904.model.database.service.impl;
 
 
+import com.example.weather_telegram_bot_0904.model.database.entity.UserCoordinatesEntity;
 import com.example.weather_telegram_bot_0904.model.database.entity.UserWeatherRecommendationEntity;
+import com.example.weather_telegram_bot_0904.model.database.repository.UserCoordinatesRepository;
 import com.example.weather_telegram_bot_0904.model.database.repository.UserWeatherRecommendationRepository;
 import com.example.weather_telegram_bot_0904.model.database.service.UserWeatherRecommendationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,84 +17,73 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserWeatherRecommendationServiceImpl implements UserWeatherRecommendationService {
 
-    private final UserWeatherRecommendationRepository repository;
+    private final UserWeatherRecommendationRepository recommendationRepository;
+
+    private final UserCoordinatesRepository coordinatesRepository;
 
     @Override
-    public List<Integer> getMinValue(Long userId) {
-        List<Integer> minValList = new ArrayList<>();
-        List<UserWeatherRecommendationEntity> entityList = repository.findByUserId(userId);
-        for (int i = 0; i <= entityList.size() - 1; i++) {
-            minValList.add(entityList.get(i).getMinValue());
-        }
-        return minValList;
-    }
-
-    @Override
-    public List<Integer> getMaxValue(Long userId) {
-        List<Integer> maxValList = new ArrayList<>();
-        List<UserWeatherRecommendationEntity> entityList = repository.findByUserId(userId);
-        for (int i = 0; i <= entityList.size() - 1; i++) {
-            maxValList.add(entityList.get(i).getMaxValue());
-        }
-        return maxValList;
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public String getRecommendation(Long id) {
-        UserWeatherRecommendationEntity userEntity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Пользователь с id " + id + " не найден"));
-        return userEntity.getRecommendation();
+        UserWeatherRecommendationEntity recommendationEntity = recommendationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Рекомендация с id " + id + " не найдена"));
+        return recommendationEntity.getRecommendation();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Long ifRecommendation(Long userId, Double value) {
         Long ifhave = 0L;
-        List<UserWeatherRecommendationEntity> userEntity = repository.findByUserId(userId);
-        for (int i = 0; i < userEntity.size(); i++) {
-            if (value >= userEntity.get(i).getMinValue() && value <= userEntity.get(i).getMaxValue()) {
-                ifhave = userEntity.get(i).getId();
-                break;
+        UserCoordinatesEntity user = coordinatesRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        for (UserWeatherRecommendationEntity recommendationEntity : user.getRecommendations()) {
+            if (value >= recommendationEntity.getMinValue() && value <= recommendationEntity.getMaxValue()) {
+                return recommendationEntity.getId();
             }
         }
         return ifhave;
     }
 
     @Override
+    @Transactional
     public boolean setValues(Long userId, Integer minValue, Integer maxValue) {
-        List<UserWeatherRecommendationEntity> userEntity = repository.findByUserId(userId);
-        boolean isPresent = false;
-        for (int i = 0; i < userEntity.size(); i++) {
-            if (userEntity.get(i).getMinValue() <= minValue && minValue <= userEntity.get(i).getMaxValue() || userEntity.get(i).getMinValue() <= minValue && maxValue <= userEntity.get(i).getMaxValue()) {
-                System.out.println("Значение пересекается с уже введёнными");
-                isPresent = true;
-                break;
-            }
+        UserCoordinatesEntity user = coordinatesRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        boolean isOverlapping = user.getRecommendations().stream()
+                .anyMatch(recommendation ->
+                        (minValue <= recommendation.getMaxValue() &&
+                                maxValue >= recommendation.getMinValue())
+                );
+
+        if (isOverlapping) {
+            return true;
         }
-        if (!isPresent) {
-            UserWeatherRecommendationEntity weatherRecommendation = new UserWeatherRecommendationEntity();
-            weatherRecommendation.setMinValue(minValue);
-            weatherRecommendation.setMaxValue(maxValue);
-            weatherRecommendation.setUserId(userId);
-            repository.save(weatherRecommendation);
-        }
-        return isPresent;
+
+        UserWeatherRecommendationEntity newRecommendation = new UserWeatherRecommendationEntity();
+        newRecommendation.setMinValue(minValue);
+        newRecommendation.setMaxValue(maxValue);
+        newRecommendation.setUser(user);  // Устанавливаю связь
+
+        user.getRecommendations().add(newRecommendation);
+
+        recommendationRepository.save(newRecommendation);
+
+        return false;
     }
 
     @Override
+    @Transactional
     public boolean setRecommendation(Long userId, int inputValue, String recommendation) {
         boolean exists = false;
-        List<UserWeatherRecommendationEntity> userEntity = repository.findByUserId(userId);
-        for (int i = 0; i < userEntity.size(); i++) {
-            for (int value = userEntity.get(i).getMinValue(); value <= userEntity.get(i).getMaxValue(); value++) {
-                if (inputValue == value) {
-                    userEntity.get(i).setRecommendation(recommendation);
-                    repository.save(userEntity.get(i));
-                    exists = true;
-                    break;
-                }
-            }
-            if (exists) {
-                break;
+        UserCoordinatesEntity user = coordinatesRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        for (UserWeatherRecommendationEntity recommendationEntity : user.getRecommendations()) {
+            if (inputValue >= recommendationEntity.getMinValue() && inputValue <= recommendationEntity.getMaxValue()) {
+                System.out.println("не подходит");
+                recommendationEntity.setRecommendation(recommendation);
+                recommendationRepository.save(recommendationEntity);
+                return true;
             }
         }
         return exists;
