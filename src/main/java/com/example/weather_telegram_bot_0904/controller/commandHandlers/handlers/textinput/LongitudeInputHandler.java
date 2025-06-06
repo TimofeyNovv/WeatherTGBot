@@ -29,21 +29,20 @@ public class LongitudeInputHandler implements CommandHandlerInterface {
         Long userId = update.getMessage().getFrom().getId();
         if (update.getMessage().getText().equals("/exit")) {
             userStateService.setUserState(userId, UserState.DEFAULT);
-            sendMessage = botMessages.sendMessage(chatId, "Успешный выход из состояния ввода");
+            return botMessages.sendMessage(chatId, "Успешный выход из состояния ввода");
         } else {
             try {
                 double value = Double.parseDouble(update.getMessage().getText());
                 if (value < -180.0 || value > 180.0) {
-                    sendMessage = botMessages.sendMessage(chatId, "Ошибка, долгота может быть в диапазоне от -180 до 180");
+                    return botMessages.sendMessage(chatId, "Ошибка, долгота может быть в диапазоне от -180 до 180");
                 } else {
                     userStateService.setUserState(userId, UserState.DEFAULT);
                     coordinatesService.saveLongitude(userId, value, chatId);
-                    sendMessage = botMessages.sendMessage(userId, "Долгота сохранена: " + coordinatesService.getLongitude(userId) + "°");
+                    return botMessages.sendMessage(userId, "Долгота сохранена: " + coordinatesService.getLongitude(userId) + "°");
                 }
             } catch (NumberFormatException e) {
-                sendMessage = botMessages.sendMessage(chatId, "Ошибка! Введите число.");
+                return botMessages.sendMessage(chatId, "Ошибка! Введите число.");
             }
         }
-        return sendMessage;
     }
 }

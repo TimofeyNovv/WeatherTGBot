@@ -27,21 +27,21 @@ public class LatitudeInputHandler implements CommandHandlerInterface {
         Long userId = update.getMessage().getFrom().getId();
         if (update.getMessage().getText().equals("/exit")) {
             userStateService.setUserState(userId, UserState.DEFAULT);
-            sendMessage = botMessages.sendMessage(chatId, "Успешный выход из состояния ввода");
+            return botMessages.sendMessage(chatId, "Успешный выход из состояния ввода");
         } else {
             try {
                 double valueLatitude = Double.parseDouble(update.getMessage().getText());
                 if (valueLatitude < -90.0 || valueLatitude > 90.0) {
-                    sendMessage = botMessages.sendMessage(chatId, "Ошибка, широта может быть в диапазоне от -90 до 90");
+                    return botMessages.sendMessage(chatId, "Ошибка, широта может быть в диапазоне от -90 до 90");
                 } else {
                     userStateService.setUserState(userId, UserState.DEFAULT);
                     coordinatesService.saveLatitude(userId, valueLatitude, chatId);
-                    sendMessage = botMessages.sendMessage(userId, "Широта сохранена: " + coordinatesService.getLatitude(userId) + "°");
+                    return botMessages.sendMessage(userId, "Широта сохранена: " + coordinatesService.getLatitude(userId) + "°");
+
                 }
             } catch (NumberFormatException e) {
-                sendMessage = botMessages.sendMessage(chatId, "Ошибка! Введите число.");
+                return botMessages.sendMessage(chatId, "Ошибка! Введите число.");
             }
         }
-        return sendMessage;
     }
 }

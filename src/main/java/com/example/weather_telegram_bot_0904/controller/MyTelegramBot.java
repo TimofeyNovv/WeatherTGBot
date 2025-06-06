@@ -45,9 +45,9 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         //Если пользователь нажал на кнопку
         if (update.hasCallbackQuery()) {
-            if (callbackRefreshProcessor.process(update) != null){
+            if (callbackRefreshProcessor.process(update, userStateService) != null){
                 try {
-                    execute(callbackRefreshProcessor.process(update));
+                    execute(callbackRefreshProcessor.process(update, userStateService));
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }

@@ -4,7 +4,8 @@ import com.example.weather_telegram_bot_0904.controller.commandHandlers.CommandP
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.*;
 import com.example.weather_telegram_bot_0904.controller.commandHandlers.handlers.textinput.*;
 import com.example.weather_telegram_bot_0904.controller.processCalbackRefresh.CallbackRefreshProcessor;
-import com.example.weather_telegram_bot_0904.controller.processCalbackRefresh.handlers.Button1CBDHandler;
+import com.example.weather_telegram_bot_0904.controller.processCalbackRefresh.handlers.LatitudeCBDHandler;
+import com.example.weather_telegram_bot_0904.controller.processCalbackRefresh.handlers.StartCBDHandler;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.CallbackProcessor;
 import com.example.weather_telegram_bot_0904.controller.processCallBackHandlers.handlers.*;
 import lombok.Data;
@@ -39,7 +40,7 @@ public class BotConfig {
             RangeInputHandler rangeInputHandler,
             RangeCommandHandler rangeCommandHandler,
             StartCommandHandler startCommandHandler,
-            ButtonsTestCommandHandler buttonsTestCommandHandler,
+            LatitudeLongitudeInputHandler latitudeLongitudeInputHandler,
             RecommendationInputHandler recommendationInputHandler
     ) {
         return new CommandProcessor(List.of(
@@ -53,8 +54,8 @@ public class BotConfig {
                 longitudeInputHandler,
                 rangeInputHandler,
                 recommendationInputHandler,
+                latitudeLongitudeInputHandler,
                 startCommandHandler,
-                buttonsTestCommandHandler,
                 defaultHandler
         ));
     }
@@ -85,11 +86,13 @@ public class BotConfig {
 
     @Bean
     CallbackRefreshProcessor callbackRefreshProcessor(
-            Button1CBDHandler button1CBDHandler
+            StartCBDHandler startCBDHandler,
+            LatitudeCBDHandler latitudeCBDHandler
     ){
         return new CallbackRefreshProcessor(
                 List.of(
-                        button1CBDHandler
+                        startCBDHandler,
+                        latitudeCBDHandler
                 )
         );
     }
